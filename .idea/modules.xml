@@ -3,9 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/LiquidBounce.main.iml" filepath="$PROJECT_DIR$/.idea/modules/LiquidBounce.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NekoBounce.api.iml" filepath="$PROJECT_DIR$/.idea/modules/NekoBounce.api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NekoBounce.main.iml" filepath="$PROJECT_DIR$/.idea/modules/NekoBounce.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NekoBounce.test.iml" filepath="$PROJECT_DIR$/.idea/modules/NekoBounce.test.iml" />
     </modules>
   </component>
 </project>

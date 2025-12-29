@@ -1,0 +1,304 @@
+/*
+ * NekoBounce Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
+ * https://github.com/RouQingNeko1024/NekoBounce
+ * Code By GoldBounce,Lizz,NightSky,FDP
+ * https://github.com/SkidderMC/FDPClient
+ * https://github.com/qm123pz/NightSky-Client
+ * https://github.com/bzym2/GoldBounce/
+ */
+package net.ccbluex.liquidbounce.features.module.modules.combat
+
+import net.ccbluex.liquidbounce.event.AttackEvent
+import net.ccbluex.liquidbounce.event.PacketEvent
+import net.ccbluex.liquidbounce.event.UpdateEvent
+import net.ccbluex.liquidbounce.event.MotionEvent
+import net.ccbluex.liquidbounce.event.handler
+import net.ccbluex.liquidbounce.features.module.Category
+import net.ccbluex.liquidbounce.features.module.Module
+import net.ccbluex.liquidbounce.features.module.ModuleManager.getModule
+import net.ccbluex.liquidbounce.features.module.modules.movement.Fly
+import net.ccbluex.liquidbounce.utils.client.PacketUtils.sendPackets
+import net.ccbluex.liquidbounce.utils.extensions.*
+import net.ccbluex.liquidbounce.utils.extras.StuckUtils
+import net.ccbluex.liquidbounce.utils.timing.MSTimer
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.network.play.client.C02PacketUseEntity
+import net.minecraft.network.play.client.C03PacketPlayer
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
+import net.minecraft.item.ItemAppleGold
+
+object Criticals : Module("Criticals", Category.COMBAT) {
+
+    val mode by choices(
+        "Mode",
+        arrayOf(
+            "Packet",
+            "NCPPacket",
+            "BlocksMC",
+            "BlocksMC2",
+            "NoGround",
+            "Hop",
+            "TPHop",
+            "Jump",
+            "LowJump",
+            "CustomMotion",
+            "Visual",
+            "HuaYuTing",
+            "Stuck"
+        ),
+        "Packet"
+    )
+
+    val delay by int("Delay", 0, 0..500)
+    private val hurtTime by int("HurtTime", 10, 0..10)
+    private val customMotionY by float("Custom-Y", 0.2f, 0.01f..0.42f) { mode == "CustomMotion" }
+    
+    // Stuck mode settings
+    private val stuckCancelInterval by int("StuckCancelMS", 300, 50..1000) { mode == "Stuck" }
+    private val stuckReapplyDelay by int("StuckReapplyTicks", 1, 0..5) { mode == "Stuck" }
+
+    val msTimer = MSTimer()
+
+    // Variables for HuaYuTing and Stuck modes
+    private var attacking = false
+    private var offGroundTicks = 0
+    private var onGroundTicks = 0
+    private var tick = 0
+    
+    // Variables for Stuck mode
+    private var skiptick = 0
+    private var gappleNoGround = false
+    private var isFalling = false
+    private var lastStuckTime = 0L
+    private var shouldStuckNextTick = false
+    private var stuckCancelTimer = MSTimer()
+
+    override fun onEnable() {
+        if (mode == "NoGround")
+            mc.thePlayer.tryJump()
+        
+        // Reset Stuck mode variables
+        if (mode.equals("Stuck", ignoreCase = true)) {
+            skiptick = 2
+            isFalling = false
+            lastStuckTime = 0L
+            shouldStuckNextTick = false
+            stuckCancelTimer.reset()
+        }
+        
+        attacking = false
+        offGroundTicks = 0
+        onGroundTicks = 0
+        tick = 0
+        gappleNoGround = false
+    }
+
+    override fun onDisable() {
+        if (mode == "Stuck") {
+            StuckUtils.stopStuck()
+        }
+    }
+
+    val onAttack = handler<AttackEvent> { event ->
+        if (event.targetEntity is EntityLivingBase) {
+            val thePlayer = mc.thePlayer ?: return@handler
+            val entity = event.targetEntity
+
+            if (!thePlayer.onGround || thePlayer.isOnLadder || thePlayer.isInWeb || thePlayer.isInLiquid ||
+                thePlayer.ridingEntity != null || entity.hurtTime > hurtTime ||
+                Fly.handleEvents() || !msTimer.hasTimePassed(delay)
+            )
+                return@handler
+
+            val (x, y, z) = thePlayer
+
+            when (mode.lowercase()) {
+                "packet" -> {
+                    sendPackets(
+                        C04PacketPlayerPosition(x, y + 0.0625, z, true),
+                        C04PacketPlayerPosition(x, y, z, false)
+                    )
+                    thePlayer.onCriticalHit(entity)
+                }
+
+                "ncppacket" -> {
+                    sendPackets(
+                        C04PacketPlayerPosition(x, y + 0.11, z, false),
+                        C04PacketPlayerPosition(x, y + 0.1100013579, z, false),
+                        C04PacketPlayerPosition(x, y + 0.0000013579, z, false)
+                    )
+                    mc.thePlayer.onCriticalHit(entity)
+                }
+
+                "blocksmc" -> {
+                    sendPackets(
+                        C04PacketPlayerPosition(x, y + 0.001091981, z, true),
+                        C04PacketPlayerPosition(x, y, z, false)
+                    )
+                }
+
+                "blocksmc2" -> {
+                    if (thePlayer.ticksExisted % 4 == 0) {
+                        sendPackets(
+                            C04PacketPlayerPosition(x, y + 0.0011, z, true),
+                            C04PacketPlayerPosition(x, y, z, false)
+                        )
+                    }
+                }
+
+                "hop" -> {
+                    thePlayer.motionY = 0.1
+                    thePlayer.fallDistance = 0.1f
+                    thePlayer.onGround = false
+                }
+
+                "tphop" -> {
+                    sendPackets(
+                        C04PacketPlayerPosition(x, y + 0.02, z, false),
+                        C04PacketPlayerPosition(x, y + 0.01, z, false)
+                    )
+                    thePlayer.setPosition(x, y + 0.01, z)
+                }
+
+                "jump" -> thePlayer.motionY = 0.42
+                "lowjump" -> thePlayer.motionY = 0.3425
+                "custommotion" -> thePlayer.motionY = customMotionY.toDouble()
+                "visual" -> thePlayer.onCriticalHit(entity)
+            }
+
+            msTimer.reset()
+        }
+    }
+
+    val onPacket = handler<PacketEvent> { event ->
+        val packet = event.packet
+
+        if (packet is C03PacketPlayer && mode == "NoGround")
+            packet.onGround = false
+
+        // HuaYuTing mode packet handling
+        if (mode == "HuaYuTing" && packet is C02PacketUseEntity) {
+            if (packet.action == C02PacketUseEntity.Action.ATTACK) {
+                attacking = true
+            }
+        }
+    }
+
+    val onUpdate = handler<UpdateEvent> {
+        // Update ground ticks counters
+        if (mc.thePlayer.onGround) {
+            onGroundTicks++
+            offGroundTicks = 0
+        } else {
+            offGroundTicks++
+            onGroundTicks = 0
+        }
+
+        // Update hurt time tick counter
+        if (mc.thePlayer.hurtTime > 0) {
+            tick = 10
+        }
+        --tick
+
+        // Stuck mode logic - NEW IMPLEMENTATION
+        if (mode.equals("Stuck", ignoreCase = true)) {
+            val thePlayer = mc.thePlayer
+            
+            // Apply stuck on next tick if needed
+            if (shouldStuckNextTick) {
+                StuckUtils.stuck()
+                shouldStuckNextTick = false
+                stuckCancelTimer.reset()
+            }
+
+            if (skiptick > 0) {
+                thePlayer.motionY = 0.0
+                skiptick--
+                return@handler
+            }
+
+            // Handle gapple no ground flag
+            if (isEatingGapple() && !thePlayer.onGround) {
+                gappleNoGround = true
+            }
+            if (!isEatingGapple() && gappleNoGround && thePlayer.onGround) {
+                gappleNoGround = false
+            }
+
+            val target = KillAura.target
+            val aura = getModule(KillAura::class.java)
+
+            // Reset if no target or aura is off
+            if (target == null || aura?.state != true || cantCrit(target)) {
+                resetStuck()
+                return@handler
+            }
+
+            // Auto-jump to initiate falling state
+            if (thePlayer.onGround && !mc.gameSettings.keyBindJump.isKeyDown && thePlayer.getDistanceToEntity(target) <= 3.0f) {
+                thePlayer.jump()
+                isFalling = false
+                StuckUtils.stopStuck() // 上升阶段不暴击
+            } else if (thePlayer.motionY < 0) {
+                // 开始下降阶段，开启暴击
+                if (!isFalling) {
+                    // 第一次进入下降阶段
+                    isFalling = true
+                    lastStuckTime = System.currentTimeMillis()
+                    StuckUtils.stuck()
+                    stuckCancelTimer.reset()
+                } else {
+                    // 下降阶段中，每隔设定时间切换stuck
+                    if (stuckCancelTimer.hasTimePassed(stuckCancelInterval.toLong())) {
+                        StuckUtils.stopStuck()
+                        // 延迟重新stuck
+                        if (stuckReapplyDelay == 0) {
+                            shouldStuckNextTick = true
+                        } else {
+                            // 如果需要多个tick延迟，设置计数器
+                            skiptick = stuckReapplyDelay
+                            shouldStuckNextTick = true
+                        }
+                        stuckCancelTimer.reset()
+                    }
+                }
+            }
+        }
+    }
+
+    val onMotion = handler<MotionEvent> { event ->
+        // HuaYuTing mode motion handling
+        if (mode == "HuaYuTing") {
+            if (KillAura.target != null && attacking) {
+                if (mc.thePlayer.fallDistance > 0 || offGroundTicks > 3) {
+                    event.onGround = false
+                }
+            } else {
+                attacking = false
+            }
+        }
+    }
+
+    private fun isEatingGapple(): Boolean {
+        if (mc.thePlayer?.isUsingItem != true) return false
+        val item = mc.thePlayer.itemInUse?.item ?: return false
+        return item is ItemAppleGold
+    }
+
+    private fun cantCrit(targetEntity: EntityLivingBase): Boolean {
+        val player = mc.thePlayer
+        return player.isOnLadder || player.isInWeb || player.isInLiquid || 
+               player.ridingEntity != null || targetEntity.hurtTime > hurtTime || 
+               targetEntity.health <= 0.0f || isEatingGapple() || gappleNoGround
+    }
+
+    private fun resetStuck() {
+        skiptick = 0
+        isFalling = false
+        StuckUtils.stopStuck()
+    }
+
+    override val tag
+        get() = mode
+}

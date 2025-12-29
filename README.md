@@ -1,6 +1,6 @@
 <div align="center">
 <p>
-    <img width="250" src="https://github.com/RouQingNeko1024/NekoBounce/blob/main/src/main/resources/assets/minecraft/liquidbounce/logo_icon.png?raw=true">
+    <img width="250" src="https://raw.githubusercontent.com/CCBlueX/LiquidCloud/master/NekoBounce/NekoBounceLogo.svg">
 </p>
     
 杂牌水，但是这是猫娘的水
@@ -11,75 +11,7 @@ A free mixin-based injection hacked-client for Minecraft using Minecraft Forge, 
 </div>
 
 ## Issues
-If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/RouQingNeko1024/NekoBounce/issues).
-
-## Used REPO:
-
--Raven XD
-
--Acrimony
-
--Vegaline
-
--Excellent
-
--Expensive
-
--Slack
-
--Untitled
-
--Faiths
-
--LiquidBounce (NextGen & Legacy)
-
--Watami
-
--Rise
-
--Tenacity
-
--Pulsive 5.0
-
--Cubk's EventManager
-
--Xylitol
-
--Nexus
-
--Atani
-
--Ketamine
-
--Radium
-
--Actinium
-
--Novoline Intent
-
--LiquidBounce Plus
-
--Eject
-
--Eclipse
-
--FDP
-
--FDPX
-
--GoldBounce
-
--MoonLight
-
--Lizz
-
--Vorte
-
--NightSky
-
--QuickMarcoBounce
-
--Augustus2.6
+If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/CCBlueX/NekoBounce/issues).
 
 ## License
 This project is subject to the [GNU General Public License v3.0](LICENSE). This does only apply for source code located directly in this clean repository. During the development and compilation process, additional source code may be used to which we have obtained no rights. Such code is not covered by the GPL license.
@@ -93,6 +25,42 @@ You are allowed to
 
 this project entirely or partially for free and even commercially. However, please consider the following:
 
+## Code Contributions:
+
+-Raven XD
+-Acrimony
+-Vegaline
+-Excellent
+-Expensive
+-Slack
+-Untitled
+-Faiths
+-LiquidBounce (NextGen & Legacy)
+-Watami
+-Rise
+-Tenacity
+-Pulsive 5.0
+-Cubk's EventManager
+-Xylitol
+-Nexus
+-Atani
+-Ketamine
+-Radium
+-Actinium
+-Novoline Intent
+-LiquidBounce Plus
+-Eject
+-Eclipse
+-FDP
+-FDPX
+-GoldBounce
+-MoonLight
+-Lizz
+-Vorte
+-NightSky
+-QuickMarcoBounce
+-Augustus2.6
+
 - **You must disclose the source code of your modified work and the source code you took from this project. This means you are not allowed to use code from this project (even partially) in a closed-source (or even obfuscated) application.**
 - **Your modified application must also be licensed under the GPL** 
 
@@ -100,13 +68,14 @@ Do the above and share your source code with everyone; just like we do.
 
 ## Setting up a Workspace
 NekoBounce is using Gradle, so make sure that it is installed properly. Instructions can be found on [Gradle's website](https://gradle.org/install/).
-1. Clone the repository using `git clone https://github.com/RouQingNeko1024/NekoBounce`. 
+1. Clone the repository using `git clone https://github.com/CCBlueX/NekoBounce/`. 
 2. CD into the local repository folder.
-3. Depending on which IDE you are using execute either of the following commands:
+3. Switch to the legacy branch using `git checkout legacy`
+4. Depending on which IDE you are using execute either of the following commands:
     - For IntelliJ: `gradlew --debug setupDevWorkspace idea genIntellijRuns build`
     - For Eclipse: `gradlew --debug setupDevWorkspace eclipse build`
-4. Open the folder as a Gradle project in your IDE.
-5. Select either the Forge or Vanilla run configuration.
+5. Open the folder as a Gradle project in your IDE.
+6. Select either the Forge or Vanilla run configuration.
 
 ## Additional libraries
 ### Mixins
