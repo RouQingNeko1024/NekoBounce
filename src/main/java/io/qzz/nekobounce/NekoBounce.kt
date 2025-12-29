@@ -88,7 +88,7 @@ object NekoBounce {
      */
     const val IN_DEV = true
 
-    val clientTitle = CLIENT_NAME + " " + clientVersionText + " " +"| " + "喵喵喵~" + "| " + MINECRAFT_VERSION + if (IN_DEV) " | DEVELOPMENT BUILD" else ""
+    val clientTitle = CLIENT_NAME + " " + clientVersionText + " " +"| " + "喵喵喵~" + "| " + clientCommit + " " + MINECRAFT_VERSION + if (IN_DEV) " | DEVELOPMENT BUILD" else ""
 
     var isStarting = true
 
