@@ -3,7 +3,7 @@ package io.qzz.nekobounce.features.module.modules.movement.flymodes.matrix
 /*
  * NekoBounce Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/CCBlueX/LiquidBounce/
+ * https://github.com/RouQingNeko1024/NekoBounce/
  */
 
 import io.qzz.nekobounce.features.module.modules.movement.flymodes.FlyMode

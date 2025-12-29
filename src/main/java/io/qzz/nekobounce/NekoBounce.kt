@@ -1,7 +1,7 @@
 /*
  * NekoBounce Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/CCBlueX/LiquidBounce/
+ * https://github.com/RouQingNeko1024/NekoBounce/
  */
 package io.qzz.nekobounce
 
@@ -72,8 +72,8 @@ object NekoBounce {
     const val CLIENT_NAME = "NekoBounce"
     const val CLIENT_AUTHOR = "Neko"
     const val CLIENT_CLOUD = "https://cloud.liquidbounce.net/LiquidBounce"
-    const val CLIENT_WEBSITE = "liquidbounce.net"
-    const val CLIENT_GITHUB = "https://github.com/CCBlueX/LiquidBounce"
+    const val CLIENT_WEBSITE = "NekoBounce.qzz.io"
+    const val CLIENT_GITHUB = "https://github.com/RouQingNeko1024/NekoBounce/"
 
     const val MINECRAFT_VERSION = "1.8.9"
     
