@@ -758,6 +758,36 @@
       "Settings": false
     }
   },
+  "Skid": {
+    "open": true,
+    "visible": true,
+    "posX": 366,
+    "posY": 170,
+    "OldFDPHighJump": {
+      "Settings": false
+    },
+    "OldFDPNoWeb": {
+      "Settings": false
+    },
+    "OldFDPPhases": {
+      "Settings": false
+    }
+  },
+  "Customtag": {
+    "open": false,
+    "visible": true,
+    "posX": 224,
+    "posY": 179,
+    "———NekoBounce———": {
+      "Settings": false
+    },
+    "———空岛高性能模式———": {
+      "Settings": false
+    },
+    "———起床高性能模式———": {
+      "Settings": false
+    }
+  },
   "Fun": {
     "open": false,
     "visible": true,
@@ -784,35 +814,5 @@
     "visible": true,
     "posX": 100,
     "posY": 265
-  },
-  "Customtag": {
-    "open": false,
-    "visible": true,
-    "posX": 224,
-    "posY": 179,
-    "———NekoBounce———": {
-      "Settings": false
-    },
-    "———空岛高性能模式———": {
-      "Settings": false
-    },
-    "———起床高性能模式———": {
-      "Settings": false
-    }
-  },
-  "Skid": {
-    "open": true,
-    "visible": true,
-    "posX": 366,
-    "posY": 170,
-    "OldFDPHighJump": {
-      "Settings": false
-    },
-    "OldFDPNoWeb": {
-      "Settings": false
-    },
-    "OldFDPPhases": {
-      "Settings": false
-    }
   }
 }
