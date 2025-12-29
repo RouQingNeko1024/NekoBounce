@@ -1,0 +1,312 @@
+[21:29:23] [main/INFO]: Extra: []
+[21:29:23] [main/INFO]: Found and added coremod: io.qzz.nekobounce.injection.forge.MixinLoader
+[21:29:23] [main/INFO]: Running with arguments: [--userProperties, {}, --assetsDir, D:/.gradle/caches/minecraft/assets, --assetIndex, 1.8, --accessToken{REDACTED}, --version, 1.8.9, --tweakClass, net.minecraftforge.fml.common.launcher.FMLTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[21:29:23] [main/INFO]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
+[21:29:23] [main/INFO]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
+[21:29:23] [main/INFO]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[21:29:23] [main/INFO]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLTweaker
+[21:29:23] [main/INFO]: Forge Mod Loader version 11.15.1.2318 for Minecraft 1.8.9 loading
+[21:29:23] [main/INFO]: Java is OpenJDK 64-Bit Server VM, version 1.8.0_462, running on Windows 11:amd64:10.0, installed at C:\Users\merryzz\.jdks\azul-1.8.0_462\jre
+[21:29:23] [main/INFO]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
+[21:29:23] [main/INFO]: Found a command line coremod : io.qzz.nekobounce.injection.forge.MixinLoader
+[21:29:23] [main/WARN]: The coremod io.qzz.nekobounce.injection.forge.MixinLoader does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[21:29:23] [main/INFO]: [io.qzz.nekobounce.injection.forge.MixinLoader:<init>:20]: [NekoBounce] Injecting with IFMLLoadingPlugin.
+[21:29:24] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.7.11 Source=file:/D:/IDEAProjects/NekoBounce_shit/build/libs/nekobounce-b6.2.jar Service=LaunchWrapper Env=CLIENT
+[21:29:24] [main/INFO]: Compatibility level set to JAVA_8
+[21:29:24] [main/ERROR]: Mixin config liquidbounce.forge.mixins.json does not specify "minVersion" property
+[21:29:24] [main/ERROR]: Mixin config liquidbounce.forge.mixins.json does not specify "minVersion" property
+[21:29:24] [main/DEBUG]: Enqueued coremod MixinLoader
+[21:29:24] [main/DEBUG]: Attempting to load commandline specified mods, relative to D:\IDEAProjects\NekoBounce_shit\run\.
+[21:29:24] [main/DEBUG]: Discovering coremods
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweaker
+[21:29:24] [main/INFO]: Injecting location in coremod net.minecraftforge.fml.relauncher.FMLCorePlugin
+[21:29:24] [main/INFO]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugin
+[21:29:24] [main/INFO]: Injecting location in coremod io.qzz.nekobounce.injection.forge.MixinLoader
+[21:29:24] [main/INFO]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[21:29:24] [main/INFO]: Loading tweak class name org.spongepowered.asm.mixin.EnvironmentStateTweaker
+[21:29:24] [main/INFO]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[21:29:24] [main/INFO]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[21:29:24] [main/DEBUG]: Injecting coremod FMLCorePlugin {net.minecraftforge.fml.relauncher.FMLCorePlugin} class transformers
+[21:29:24] [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.BlamingTransformer
+[21:29:24] [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.SideTransformer
+[21:29:24] [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.EventSubscriptionTransformer
+[21:29:24] [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.EventSubscriberTransformer
+[21:29:24] [main/DEBUG]: Injection complete
+[21:29:24] [main/DEBUG]: Running coremod plugin for FMLCorePlugin {net.minecraftforge.fml.relauncher.FMLCorePlugin}
+[21:29:24] [main/DEBUG]: Running coremod plugin FMLCorePlugin
+[21:29:24] [main/ERROR]: The binary patch set is missing. Either you are in a development environment, or things are not going to work!
+[21:29:24] [main/DEBUG]: Loading deobfuscation resource D:\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\22\srgs\srg-mcp.srg with 27884 records
+[21:29:24] [main/ERROR]: FML appears to be missing any signature data. This is not a good thing
+[21:29:24] [main/DEBUG]: Coremod plugin class FMLCorePlugin run successfully
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[21:29:24] [main/DEBUG]: Injecting coremod FMLForgePlugin {net.minecraftforge.classloading.FMLForgePlugin} class transformers
+[21:29:24] [main/DEBUG]: Injection complete
+[21:29:24] [main/DEBUG]: Running coremod plugin for FMLForgePlugin {net.minecraftforge.classloading.FMLForgePlugin}
+[21:29:24] [main/DEBUG]: Running coremod plugin FMLForgePlugin
+[21:29:24] [main/DEBUG]: Coremod plugin class FMLForgePlugin run successfully
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[21:29:24] [main/DEBUG]: Injecting coremod MixinLoader {io.qzz.nekobounce.injection.forge.MixinLoader} class transformers
+[21:29:24] [main/TRACE]: Registering transformer io.qzz.nekobounce.injection.transformers.ForgeNetworkTransformer
+[21:29:24] [main/TRACE]: Registering transformer io.qzz.nekobounce.script.remapper.injection.transformers.AbstractJavaLinkerTransformer
+[21:29:24] [main/DEBUG]: Injection complete
+[21:29:24] [main/DEBUG]: Running coremod plugin for MixinLoader {io.qzz.nekobounce.injection.forge.MixinLoader}
+[21:29:24] [main/DEBUG]: Running coremod plugin MixinLoader
+[21:29:24] [main/DEBUG]: Coremod plugin class MixinLoader run successfully
+[21:29:24] [main/INFO]: Calling tweak class org.spongepowered.asm.mixin.EnvironmentStateTweaker
+[21:29:24] [main/INFO]: Initialised Mixin FML Remapper Adapter with net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper@1a38ba58
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[21:29:24] [main/DEBUG]: Loaded 165 rules from AccessTransformer config file forge_at.cfg
+[21:29:24] [main/DEBUG]: Loaded 83 rules from AccessTransformer mod jar file D:\IDEAProjects\NekoBounce_shit\build\libs\nekobounce-b6.2.jar!META-INF/liquidbounce_at.cfg
+
+[21:29:24] [main/DEBUG]: Validating minecraft
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[21:29:24] [main/INFO]: Remapping AccessTransformer rules...
+[21:29:24] [main/INFO]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweaker
+[21:29:24] [main/INFO]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweaker
+[21:29:24] [main/INFO]: Remapping refMap liquidbounce.mixins.refmap.json using D:\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\22\srgs\srg-mcp.srg
+[21:29:25] [main/INFO]: Launching wrapped minecraft {net.minecraft.client.main.Main}
+[21:29:27] [Client thread/INFO]: Setting user: Player515
+[21:29:27] [Client thread/INFO]: IntegratedServer mixin successfully loaded!
+[21:29:31] [DefaultDispatcher-worker-1/INFO]: Starting preload tasks of NekoBounce
+[21:29:31] [Client thread/INFO]: LWJGL Version: 2.9.4
+[21:29:32] [Client thread/WARN]: =============================================================
+[21:29:32] [Client thread/WARN]: MOD HAS DIRECT REFERENCE System.exit() THIS IS NOT ALLOWED REROUTING TO FML!
+[21:29:32] [Client thread/WARN]: Offendor: com/sun/jna/Native.main([Ljava/lang/String;)V
+[21:29:32] [Client thread/WARN]: Use FMLCommonHandler.exitJava instead
+[21:29:32] [Client thread/WARN]: =============================================================
+[21:29:32] [Client thread/INFO]: [net.minecraftforge.fml.client.SplashProgress:start:246]: ---- Minecraft Crash Report ----
+
+WARNING: coremods are present:
+  MixinLoader (nekobounce-b6.2.jar)
+Contact their authors BEFORE contacting forge
+
+// Shall we play a game?
+
+Time: 25-12-29 下午9:29
+Description: Loading screen debug info
+
+This is just a prompt for computer specs to be printed. THIS IS NOT A ERROR
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_462, Azul Systems, Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Azul Systems, Inc.
+	Memory: 1481134952 bytes (1412 MB) / 2074607616 bytes (1978 MB) up to 3817865216 bytes (3641 MB)
+	JVM Flags: 2 total; -Xms1024m -Xmx4096m
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: 
+	Loaded coremods (and transformers): 
+MixinLoader (nekobounce-b6.2.jar)
+  io.qzz.nekobounce.injection.transformers.ForgeNetworkTransformer
+  io.qzz.nekobounce.script.remapper.injection.transformers.AbstractJavaLinkerTransformer
+	GL info: ' Vendor: 'NVIDIA Corporation' Version: '4.6.0 NVIDIA 560.94' Renderer: 'NVIDIA GeForce RTX 3060/PCIe/SSE2'
+[21:29:32] [Client thread/INFO]: MinecraftForge v11.15.1.2318 Initialized
+[21:29:32] [Client thread/INFO]: Replaced 229 ore recipies
+[21:29:33] [Thread-11/INFO]: [Shader] Successfully loaded: rainbow_font_shader.frag
+[21:29:33] [Client thread/INFO]: Found 0 mods from the command line. Injecting into mod discoverer
+[21:29:33] [Client thread/INFO]: Searching D:\IDEAProjects\NekoBounce_shit\run\mods for mods
+[21:29:33] [Thread-11/INFO]: [Shader] Successfully loaded: gradient_font_shader.frag
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Loaded language en_US
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Loaded language pt_BR
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Loaded language pt_PT
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Loaded language zh_CN
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Loaded language zh_TW
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Loaded language bg_BG
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Loaded language ru_RU
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: [Remapper] Successfully loaded SRG mappings.
+[21:29:33] [DefaultDispatcher-worker-1/INFO]: Preload tasks of NekoBounce are completed!
+[21:29:33] [Client thread/INFO]: Forge Mod Loader has identified 3 mods to load
+[21:29:34] [Client thread/INFO]: Attempting connection with missing mods [mcp, FML, Forge] at CLIENT
+[21:29:34] [Client thread/INFO]: Attempting connection with missing mods [mcp, FML, Forge] at SERVER
+[21:29:34] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge
+[21:29:34] [Client thread/INFO]: Processing ObjectHolder annotations
+[21:29:34] [Client thread/INFO]: Found 384 ObjectHolder annotations
+[21:29:34] [Client thread/INFO]: Identifying ItemStackHolder annotations
+[21:29:34] [Client thread/INFO]: Found 0 ItemStackHolder annotations
+[21:29:34] [Client thread/INFO]: Configured a dormant chunk cache size of 0
+[21:29:34] [Client thread/INFO]: Applying holder lookups
+[21:29:34] [Forge Version Check/INFO]: [Forge] Starting version check at http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json
+[21:29:34] [Client thread/INFO]: Holder lookups applied
+[21:29:34] [Client thread/INFO]: Injecting itemstacks
+[21:29:34] [Client thread/INFO]: Itemstack injection complete
+[21:29:34] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[21:29:34] [Thread-13/INFO]: Initializing LWJGL OpenAL
+[21:29:34] [Thread-13/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[21:29:34] [Thread-13/INFO]: OpenAL initialized.
+[21:29:34] [Sound Library Loader/INFO]: Sound engine started
+[21:29:36] [Client thread/INFO]: Max texture size: 16384
+[21:29:36] [Client thread/INFO]: Created: 16x16 textures-atlas
+[21:29:37] [Client thread/INFO]: Injecting itemstacks
+[21:29:37] [Client thread/INFO]: Itemstack injection complete
+[21:29:37] [Client thread/INFO]: Forge Mod Loader has successfully loaded 3 mods
+[21:29:37] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge
+[21:29:37] [Client thread/INFO]: SoundSystem shutting down...
+[21:29:37] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
+[21:29:37] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[21:29:37] [Thread-15/INFO]: Initializing LWJGL OpenAL
+[21:29:37] [Thread-15/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[21:29:37] [Thread-15/INFO]: OpenAL initialized.
+[21:29:38] [Sound Library Loader/INFO]: Sound engine started
+[21:29:39] [Client thread/INFO]: Max texture size: 16384
+[21:29:39] [Client thread/INFO]: Created: 512x512 textures-atlas
+[21:29:39] [Client thread/INFO]: Starting NekoBounce b6.2 git-76bc672, by Neko
+[21:29:39] [Client thread/INFO]: Start to load fonts.
+[21:29:39] [Client thread/INFO]: Start to load fonts from file.
+[21:29:46] [Client thread/INFO]: Loaded 50 fonts in 6258ms
+[21:29:46] [Client thread/INFO]: [ModuleManager] Loading modules...
+[21:29:46] [DefaultDispatcher-worker-3/INFO]: Successfully loaded 17 settings.
+[21:29:47] [DefaultDispatcher-worker-3/INFO]: (MCChat) §7[§a§lChat§7] §9Connecting to chat server...
+[21:29:47] [Client thread/INFO]: [ModuleManager] Loaded 246 modules.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: modules.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: modules.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: values.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: values.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: clickgui.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: clickgui.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: accounts.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: accounts.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: friends.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: friends.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: xray-blocks.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: xray-blocks.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: hud.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: hud.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Skipped loading config: shortcuts.json.
+[21:29:47] [Client thread/INFO]: [FileManager] Saved config: shortcuts.json.
+[21:29:48] [DefaultDispatcher-worker-1/INFO]: Loading heads...
+[21:29:48] [Client thread/INFO]: Successfully started client
+[21:29:48] [DefaultDispatcher-worker-1/INFO]: Loading heads from https://headdb.org/api/category/all...
+[21:29:48] [DefaultDispatcher-worker-2/ERROR]: Failed to setup Discord RPC.
+java.lang.RuntimeException: java.io.FileNotFoundException: \\?\pipe\discord-ipc-0 (系统找不到指定的文件。)
+	at com.jagrosh.discordipc.entities.pipe.WindowsPipe.<init>(WindowsPipe.java:45) ~[WindowsPipe.class:?]
+	at com.jagrosh.discordipc.entities.pipe.Pipe.createPipe(Pipe.java:158) ~[Pipe.class:?]
+	at com.jagrosh.discordipc.entities.pipe.Pipe.openPipe(Pipe.java:67) ~[Pipe.class:?]
+	at com.jagrosh.discordipc.IPCClient.connect(IPCClient.java:116) ~[IPCClient.class:?]
+	at io.qzz.nekobounce.features.special.ClientRichPresence.setup(ClientRichPresence.kt:90) [ClientRichPresence.class:?]
+	at io.qzz.nekobounce.NekoBounce$startClient$4.invokeSuspend(NekoBounce.kt:230) [NekoBounce$startClient$4.class:?]
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33) [BaseContinuationImpl.class:?]
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100) [DispatchedTask.class:?]
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113) [LimitedDispatcher$Worker.class:?]
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89) [TaskImpl.class:?]
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586) [CoroutineScheduler.class:?]
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:820) [CoroutineScheduler$Worker.class:?]
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717) [CoroutineScheduler$Worker.class:?]
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704) [CoroutineScheduler$Worker.class:?]
+Caused by: java.io.FileNotFoundException: \\?\pipe\discord-ipc-0 (系统找不到指定的文件。)
+	at java.io.RandomAccessFile.open0(Native Method) ~[?:1.8.0_462]
+	at java.io.RandomAccessFile.open(RandomAccessFile.java:316) ~[?:1.8.0_462]
+	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:243) ~[?:1.8.0_462]
+	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:124) ~[?:1.8.0_462]
+	at com.jagrosh.discordipc.entities.pipe.WindowsPipe.<init>(WindowsPipe.java:43) ~[WindowsPipe.class:?]
+	... 13 more
+[21:29:49] [DefaultDispatcher-worker-5/INFO]: Successfully loaded 0 cape carriers.
+[21:29:49] [DefaultDispatcher-worker-3/INFO]: (MCChat) §7[§a§lChat§7] §9Connected to chat server!
+[21:29:51] [DefaultDispatcher-worker-1/INFO]: Loaded 956 heads from HeadDB.
+[21:29:56] [Client thread/INFO]: [Shader] Successfully loaded: background.frag
+[21:29:59] [Client thread/INFO]: IntegratedServer mixin successfully loaded!
+[21:29:59] [Server thread/INFO]: Starting integrated minecraft server version 1.8.9
+[21:29:59] [Server thread/INFO]: Generating keypair
+[21:29:59] [Server thread/INFO]: Converting map!
+[21:29:59] [Server thread/INFO]: Scanning folders...
+[21:29:59] [Server thread/INFO]: Total conversion count is 0
+[21:29:59] [Server thread/INFO]: Injecting existing block and item data into this server instance
+[21:29:59] [Server thread/INFO]: Applying holder lookups
+[21:29:59] [Server thread/INFO]: Holder lookups applied
+[21:29:59] [Server thread/INFO]: Loading dimension 0 (New World) (net.minecraft.server.integrated.IntegratedServer@2f7127b9)
+[21:29:59] [Server thread/INFO]: Loading dimension 1 (New World) (net.minecraft.server.integrated.IntegratedServer@2f7127b9)
+[21:29:59] [Server thread/INFO]: Loading dimension -1 (New World) (net.minecraft.server.integrated.IntegratedServer@2f7127b9)
+[21:29:59] [Server thread/INFO]: Preparing start region for level 0
+[21:30:00] [Server thread/INFO]: Preparing spawn area: 24%
+[21:30:01] [Server thread/INFO]: Preparing spawn area: 48%
+[21:30:02] [Server thread/INFO]: Preparing spawn area: 70%
+[21:30:03] [Server thread/INFO]: Preparing spawn area: 94%
+[21:30:04] [Server thread/INFO]: Changing view distance to 12, from 10
+[21:30:05] [Netty Local Client IO #0/INFO]: Server protocol version 2
+[21:30:05] [Netty Server IO #1/INFO]: Client protocol version 2
+[21:30:05] [Netty Server IO #1/INFO]: Client attempting to join with 3 mods : FML@8.0.99.99,Forge@11.15.1.2318,mcp@9.19
+[21:30:05] [Netty Local Client IO #0/INFO]: [Netty Local Client IO #0] Client side modded connection established
+[21:30:05] [Server thread/INFO]: [Server thread] Server side modded connection established
+[21:30:05] [Server thread/INFO]: Player515[local:E:50c91787] logged in with entity id 112 at (-44.5, 64.0, -1.5)
+[21:30:05] [Server thread/INFO]: Player515 joined the game
+[21:30:05] [Server thread/INFO]: Saving and pausing game...
+[21:30:05] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[21:30:05] [Client thread/INFO]: [Shader] Successfully loaded: gradient_shader.frag
+[21:30:05] [Client thread/INFO]: [Shader] Successfully loaded: rainbow_shader.frag
+[21:30:05] [Client thread/WARN]: Mixin liquidbounce.forge.mixins.json:gui.MixinGuiButtonExt has multiple constructors, (IIILjava/lang/String;)V was selected
+
+[21:30:07] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[21:30:07] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[21:30:07] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2052ms behind, skipping 41 tick(s)
+[21:30:14] [Client thread/INFO]: [FileManager] Saved config: modules.json.
+[21:30:17] [Client thread/INFO]: [FileManager] Saved config: modules.json.
+[21:30:17] [Client thread/WARN]: Failed to load texture: minecraft:liquidbounce/tabgui/skid.png
+java.io.FileNotFoundException: minecraft:liquidbounce/tabgui/skid.png
+	at net.minecraft.client.resources.FallbackResourceManager.getResource(FallbackResourceManager.java:67) ~[FallbackResourceManager.class:?]
+	at net.minecraft.client.resources.SimpleReloadableResourceManager.getResource(SimpleReloadableResourceManager.java:64) ~[SimpleReloadableResourceManager.class:?]
+	at net.minecraft.client.renderer.texture.SimpleTexture.loadTexture(SourceFile:28) ~[SimpleTexture.class:?]
+	at net.minecraft.client.renderer.texture.TextureManager.loadTexture(TextureManager.java:67) ~[TextureManager.class:?]
+	at net.minecraft.client.renderer.texture.TextureManager.bindTexture(TextureManager.java:42) ~[TextureManager.class:?]
+	at io.qzz.nekobounce.utils.render.RenderUtils.drawImage(RenderUtils.kt:1272) ~[RenderUtils.class:?]
+	at io.qzz.nekobounce.utils.render.RenderUtils.drawImage$default(RenderUtils.kt:1256) ~[RenderUtils.class:?]
+	at io.qzz.nekobounce.ui.client.hud.element.elements.Arraylist.drawElement(Arraylist.kt:638) ~[Arraylist.class:?]
+	at io.qzz.nekobounce.ui.client.hud.HUD.render(HUD.kt:81) ~[HUD.class:?]
+	at io.qzz.nekobounce.features.module.modules.render.HUD.onRender2D$lambda$16(HUD.kt:58) ~[HUD.class:?]
+	at io.qzz.nekobounce.event.EventHook.processEvent$nekobounce(EventHook.kt:24) [EventHook.class:?]
+	at io.qzz.nekobounce.event.EventManager.call(EventManager.kt:79) [EventManager.class:?]
+	at net.minecraft.client.gui.GuiIngame.liquidBounce$injectRender2DEvent(SourceFile:1248) [GuiIngame.class:?]
+	at net.minecraft.client.gui.GuiIngame.handler$injectCustomHotbar$zbh000(SourceFile:1226) [GuiIngame.class:?]
+	at net.minecraft.client.gui.GuiIngame.renderTooltip(SourceFile) [GuiIngame.class:?]
+	at net.minecraftforge.client.GuiIngameForge.renderTooltip(GuiIngameForge.java:297) [GuiIngameForge.class:?]
+	at net.minecraftforge.client.GuiIngameForge.renderGameOverlay(GuiIngameForge.java:120) [GuiIngameForge.class:?]
+	at net.minecraft.client.renderer.EntityRenderer.updateCameraAndRender(EntityRenderer.java:1082) [EntityRenderer.class:?]
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1051) [Minecraft.class:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:349) [Minecraft.class:?]
+	at net.minecraft.client.main.Main.main(SourceFile:124) [Main.class:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_462]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_462]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_462]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_462]
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135) [launchwrapper-1.12.jar:?]
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28) [launchwrapper-1.12.jar:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_462]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_462]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_462]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_462]
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:95) [start/:?]
+	at GradleStart.main(GradleStart.java:24) [start/:?]
+[21:30:18] [Client thread/INFO]: [FileManager] Saved config: modules.json.
+[21:30:18] [Client thread/INFO]: [FileManager] Saved config: clickgui.json.
+[21:30:20] [Server thread/INFO]: Saving and pausing game...
+[21:30:20] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[21:30:20] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[21:30:20] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: modules.json.
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: values.json.
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: clickgui.json.
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: accounts.json.
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: friends.json.
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: xray-blocks.json.
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: hud.json.
+[21:30:21] [Client thread/INFO]: [FileManager] Saved config: shortcuts.json.
+[21:30:21] [Client thread/INFO]: Stopping!
+[21:30:21] [Client thread/INFO]: SoundSystem shutting down...
+[21:30:21] [Server thread/INFO]: Stopping server
+[21:30:21] [Server thread/INFO]: Saving players
+[21:30:21] [Server thread/INFO]: Saving worlds
+[21:30:21] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[21:30:21] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[21:30:21] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[21:30:21] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
+[21:30:21] [Client Shutdown Thread/INFO]: Stopping server
+[21:30:21] [Client Shutdown Thread/INFO]: Saving players
+[21:30:21] [Client Shutdown Thread/INFO]: Saving worlds
+[21:30:21] [Client Shutdown Thread/INFO]: Saving chunks for level 'New World'/Overworld

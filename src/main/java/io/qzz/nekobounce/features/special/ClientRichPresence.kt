@@ -42,7 +42,7 @@ object ClientRichPresence : Configurable("DiscordRPC"), MinecraftInstance, Liste
     // IPC Client
     private var ipcClient: IPCClient? = null
 
-    private var appID = 0L
+    private var appID = 1455191338864738485
     private val assets = mutableMapOf<String, String>()
     private val timestamp = OffsetDateTime.now()
 

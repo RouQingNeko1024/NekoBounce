@@ -1,0 +1,243 @@
+FD: io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/blockState io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/M
+FD: io/qzz/nekobounce/injection/forge/mixins/block/MixinBlockLadder/FACING io/qzz/nekobounce/injection/forge/mixins/block/MixinBlockLadder/a
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinGameSettings/guiScale io/qzz/nekobounce/injection/forge/mixins/client/MixinGameSettings/aL
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/currentScreen io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/m
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/skipRenderWorld io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/r
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/leftClickCounter io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/ag
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/objectMouseOver io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/s
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/theWorld io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/f
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/thePlayer io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/h
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/playerController io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/c
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/displayWidth io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/d
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/displayHeight io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/e
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/rightClickDelayTimer io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/ap
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/gameSettings io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/t
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMovementInput/moveStrafe io/qzz/nekobounce/injection/forge/mixins/client/MixinMovementInput/a
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMovementInput/moveForward io/qzz/nekobounce/injection/forge/mixins/client/MixinMovementInput/b
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinResourcePackRepository/dirServerResourcepacks io/qzz/nekobounce/injection/forge/mixins/client/MixinResourcePackRepository/f
+FD: io/qzz/nekobounce/injection/forge/mixins/client/MixinResourcePackRepository/logger io/qzz/nekobounce/injection/forge/mixins/client/MixinResourcePackRepository/c
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/posX io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/s
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/posY io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/t
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/posZ io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/u
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/rotationPitch io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/z
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/rotationYaw io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/y
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/ridingEntity io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/m
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/motionX io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/v
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/motionY io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/w
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/motionZ io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/x
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/onGround io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/C
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isAirBorne io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/ai
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/noClip io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/T
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/worldObj io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/o
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isInWeb io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/H
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/stepHeight io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/S
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isCollidedHorizontally io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/D
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isCollidedVertically io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/E
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isCollided io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/F
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/distanceWalkedModified io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/M
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/distanceWalkedOnStepModified io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/N
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/rand io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/V
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/fireResistance io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/X
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/inPortal io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/ak
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/timeUntilPortal io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/aj
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/width io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/J
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/nextStepDistance io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/h
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/fire io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/i
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/prevRotationPitch io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/B
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/prevRotationYaw io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/A
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/rotationYawHead io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/aK
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/isJumping io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/aY
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/jumpTicks io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/bn
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/flyToggleTimer io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/bm
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/capabilities io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/bA
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/inventory io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/bi
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/itemInUse io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/g
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/itemInUseCount io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/h
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/serverSprintState io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bQ
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/sprintingTicksLeft io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/e
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/timeInPortal io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bH
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/prevTimeInPortal io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bI
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/movementInput io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/b
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/horseJumpPower io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bV
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/horseJumpPowerCounter io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bU
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/sendQueue io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/a
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/sprintToggleTimer io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/d
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/mc io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/c
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/serverSneakState io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bP
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/lastReportedPosX io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bK
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/positionUpdateTicks io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bR
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/lastReportedPosY io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bL
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/lastReportedPosZ io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bM
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/lastReportedYaw io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bN
+FD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/lastReportedPitch io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/bO
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/visible io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/m
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/xPosition io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/h
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/yPosition io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/i
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/width io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/f
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/height io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/g
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/hovered io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/n
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/enabled io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/l
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/displayString io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/j
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/buttonTextures io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/a
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/id io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/k
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/inputField io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/a
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/foundPlayerNames io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/t
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/waitingOnAutocomplete io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/r
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiDisconnected/field_175353_i io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiDisconnected/i
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/editLine io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/g
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/tileSign io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/a
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/doneBtn io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/h
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiInGame/mc io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiInGame/j
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/mc io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/j
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/buttonList io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/n
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/width io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/l
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/height io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/m
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/fontRendererObj io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/q
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/field_178041_q io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/q
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/mouseX io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/i
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/mouseY io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/j
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/left io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/g
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/top io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/d
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/width io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/b
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/amountScrolled io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/n
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/hasListHeader io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/s
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/right io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/f
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/bottom io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/e
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/mc io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/a
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/height io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/c
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/showSelectionBox io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/r
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/slotHeight io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/h
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/headerPadding io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/t
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/xPosition io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/a
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/yPosition io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/f
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/width io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/i
+FD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/height io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiTextField/j
+FD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/prevEquippedProgress io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/f
+FD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/equippedProgress io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/e
+FD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/mc io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/c
+FD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/itemToRender io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/d
+FD: io/qzz/nekobounce/injection/forge/mixins/item/MixinMixinItemStack/item io/qzz/nekobounce/injection/forge/mixins/item/MixinMixinItemStack/d
+FD: io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/currentServerMaxPlayers io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/a
+FD: io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/netManager io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/c
+FD: io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/gameController io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/f
+FD: io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/clientWorldController io/qzz/nekobounce/injection/forge/mixins/network/MixinNetHandlerPlayClient/g
+FD: io/qzz/nekobounce/injection/forge/mixins/network/MixinNetworkPlayerInfo/gameProfile io/qzz/nekobounce/injection/forge/mixins/network/MixinNetworkPlayerInfo/a
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEffectRenderer/particleEmitters io/qzz/nekobounce/injection/forge/mixins/render/MixinEffectRenderer/d
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/pointedEntity io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/n
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/mc io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/h
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/thirdPersonDistanceTemp io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/r
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/thirdPersonDistance io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/q
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/lightmapColors io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/H
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/lightmapTexture io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/G
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/torchFlickerX io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/K
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/bossColorModifier io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/z
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/bossColorModifierPrev io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/A
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/lightmapUpdateNeeded io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/J
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinLayerHeldItem/livingEntityRenderer io/qzz/nekobounce/injection/forge/mixins/render/MixinLayerHeldItem/a
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinModelBiped/bipedRightArm io/qzz/nekobounce/injection/forge/mixins/render/MixinModelBiped/h
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinModelBiped/heldItemRight io/qzz/nekobounce/injection/forge/mixins/render/MixinModelBiped/m
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinModelBiped/bipedHead io/qzz/nekobounce/injection/forge/mixins/render/MixinModelBiped/e
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRendererLivingEntity/mainModel io/qzz/nekobounce/injection/forge/mixins/render/MixinRendererLivingEntity/f
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderManager/renderPosX io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderManager/o
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderManager/renderPosY io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderManager/p
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderManager/renderPosZ io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderManager/q
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/banner io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/e
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/enderChest io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/d
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/field_147718_c io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/c
+FD: io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/field_147717_b io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/b
+FD: io/qzz/nekobounce/injection/forge/mixins/world/MixinChunk/xPosition io/qzz/nekobounce/injection/forge/mixins/world/MixinChunk/a
+FD: io/qzz/nekobounce/injection/forge/mixins/world/MixinChunk/zPosition io/qzz/nekobounce/injection/forge/mixins/world/MixinChunk/b
+MD: io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/getCollisionBoundingBox (Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;)Lnet/minecraft/util/AxisAlignedBB; io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/a (Ladm;Lcj;Lalz;)Laug;
+MD: io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/setBlockBounds (FFFFFF)V io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/a (FFFFFF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/onBlockPlaced (Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;FFFILnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/block/state/IBlockState; io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/a (Ladm;Lcj;Lcq;FFFILpr;)Lalz;
+MD: io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/addCollisionBoxesToList (Lnet/minecraft/world/World;Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/util/AxisAlignedBB;Ljava/util/List;Lnet/minecraft/entity/Entity;)V io/qzz/nekobounce/injection/forge/mixins/block/MixinBlock/a (Ladm;Lcj;Lalz;Laug;Ljava/util/List;Lpk;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/displayGuiScreen (Lnet/minecraft/client/gui/GuiScreen;)V io/qzz/nekobounce/injection/forge/mixins/client/MixinMinecraft/a (Laxu;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/client/MixinResourcePackRepository/deleteOldServerResourcesPacks ()V io/qzz/nekobounce/injection/forge/mixins/client/MixinResourcePackRepository/i ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isSprinting ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/aw ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/getEntityBoundingBox ()Lnet/minecraft/util/AxisAlignedBB; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/aR ()Laug;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/moveEntity (DDD)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/d (DDD)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isInWater ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/V ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isRiding ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/au ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/setFire (I)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/e (I)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/dealFireDamage (I)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/f (I)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isWet ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/U ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/a (Lc;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/doBlockCollisions ()V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/Q ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/playStepSound (Lnet/minecraft/util/BlockPos;Lnet/minecraft/block/Block;)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/a (Lcj;Lafh;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/setEntityBoundingBox (Lnet/minecraft/util/AxisAlignedBB;)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/a (Laug;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/getVectorForRotation (FF)Lnet/minecraft/util/Vec3; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/f (FF)Laui;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/getUniqueID ()Ljava/util/UUID; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/aK ()Ljava/util/UUID;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isSneaking ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/av ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/isInsideOfMaterial (Lnet/minecraft/block/material/Material;)Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntity/a (Larm;)Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/getJumpUpwardsMotion ()F io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/bE ()F
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/getActivePotionEffect (Lnet/minecraft/potion/Potion;)Lnet/minecraft/potion/PotionEffect; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/b (Lpe;)Lpf;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/isPotionActive (Lnet/minecraft/potion/Potion;)Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/a (Lpe;)Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/onLivingUpdate ()V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/m ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/updateFallState (DZLnet/minecraft/block/Block;Lnet/minecraft/util/BlockPos;)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/a (DZLafh;Lcj;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/getHealth ()F io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/bn ()F
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/getHeldItem ()Lnet/minecraft/item/ItemStack; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/bA ()Lzx;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/updateAITick ()V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/bG ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/jump ()V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityLivingBase/bF ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/getHeldItem ()Lnet/minecraft/item/ItemStack; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/bA ()Lzx;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/getGameProfile ()Lcom/mojang/authlib/GameProfile; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/cd ()Lcom/mojang/authlib/GameProfile;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/canTriggerWalking ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/s_ ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/getSwimSound ()Ljava/lang/String; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/P ()Ljava/lang/String;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/getFoodStats ()Lnet/minecraft/util/FoodStats; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/cl ()Lxg;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/getItemInUseDuration ()I io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/bT ()I
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/getItemInUse ()Lnet/minecraft/item/ItemStack; io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/bQ ()Lzx;
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/isUsingItem ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayer/bS ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/playSound (Ljava/lang/String;FF)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/a (Ljava/lang/String;FF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/setSprinting (Z)V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/d (Z)V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/pushOutOfBlocks (DDD)Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/j (DDD)Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/sendPlayerAbilities ()V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/t ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/sendHorseJump ()V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/r ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/isRidingHorse ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/y ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/isSneaking ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/av ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/isCurrentViewEntity ()Z io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/A ()Z
+MD: io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/onLivingUpdate ()V io/qzz/nekobounce/injection/forge/mixins/entity/MixinEntityPlayerSP/m ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/mouseDragged (Lnet/minecraft/client/Minecraft;II)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/b (Lave;II)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/drawButton (Lnet/minecraft/client/Minecraft;II)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButton/a (Lave;II)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButtonExt/drawButton (Lnet/minecraft/client/Minecraft;II)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiButtonExt/a (Lave;II)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/onAutocompleteResponse ([Ljava/lang/String;)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/a ([Ljava/lang/String;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/drawScreen (IIF)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiChat/a (IIF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiConnecting/drawScreen (IIF)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiConnecting/a (IIF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/keyTyped (CI)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiEditSign/a (CI)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiInGame/renderHotbarItem (IIIFLnet/minecraft/entity/player/EntityPlayer;)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiInGame/a (IIIFLwn;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/updateScreen ()V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/e ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/handleComponentHover (Lnet/minecraft/util/IChatComponent;II)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/a (Leu;II)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/drawHoveringText (Ljava/util/List;II)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/a (Ljava/util/List;II)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/actionPerformed (Lnet/minecraft/client/gui/GuiButton;)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiScreen/a (Lavs;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/drawBackground ()V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/a ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/bindAmountScrolled ()V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/l ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/drawListHeader (IILnet/minecraft/client/renderer/Tessellator;)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/a (IILbfx;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/drawSelectionBox (IIII)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/b (IIII)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/getContentHeight ()I io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/k ()I
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/func_148135_f ()I io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/m ()I
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/func_148142_b (II)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/b (II)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/isSelected (I)Z io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/a (I)Z
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/drawSlot (IIIIII)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/a (IIIIII)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/func_178040_a (III)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/a (III)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/drawScreen (IIF)V io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/a (IIF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/getScrollBarX ()I io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/d ()I
+MD: io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/getListWidth ()I io/qzz/nekobounce/injection/forge/mixins/gui/MixinGuiSlot/c ()I
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/rotateArroundXAndY (FF)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (FF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/setLightMapFromPlayer (Lnet/minecraft/client/entity/AbstractClientPlayer;)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (Lbet;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/rotateWithPlayerRotations (Lnet/minecraft/client/entity/EntityPlayerSP;F)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (Lbew;F)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/renderItemMap (Lnet/minecraft/client/entity/AbstractClientPlayer;FFF)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (Lbet;FFF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/transformFirstPersonItem (FF)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/b (FF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/performDrinking (Lnet/minecraft/client/entity/AbstractClientPlayer;F)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (Lbet;F)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/doBowTransformations (FLnet/minecraft/client/entity/AbstractClientPlayer;)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (FLbet;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/doItemUsedTransformations (F)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/d (F)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/renderItem (Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (Lpr;Lzx;Lbgr$b;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/renderPlayerArm (Lnet/minecraft/client/entity/AbstractClientPlayer;FF)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (Lbet;FF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/renderItemInFirstPerson (F)V io/qzz/nekobounce/injection/forge/mixins/item/MixinItemRenderer/a (F)V
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEffectRenderer/updateEffectLayer (I)V io/qzz/nekobounce/injection/forge/mixins/render/MixinEffectRenderer/a (I)V
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEffectRenderer/updateEffects ()V io/qzz/nekobounce/injection/forge/mixins/render/MixinEffectRenderer/a ()V
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/getNightVisionBrightness (Lnet/minecraft/entity/EntityLivingBase;F)F io/qzz/nekobounce/injection/forge/mixins/render/MixinEntityRenderer/a (Lpr;F)F
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinLayerHeldItem/doRenderLayer (Lnet/minecraft/entity/EntityLivingBase;FFFFFFF)V io/qzz/nekobounce/injection/forge/mixins/render/MixinLayerHeldItem/a (Lpr;FFFFFFF)V
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRender/bindEntityTexture (Lnet/minecraft/entity/Entity;)Z io/qzz/nekobounce/injection/forge/mixins/render/MixinRender/c (Lpk;)Z
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderEntityItem/func_177077_a (Lnet/minecraft/entity/item/EntityItem;DDDFLnet/minecraft/client/resources/model/IBakedModel;)I io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderEntityItem/a (Luz;DDDFLboq;)I
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderPlayer/getMainModel ()Lnet/minecraft/client/model/ModelPlayer; io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderPlayer/g ()Lbbr;
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderPlayer/setModelVisibilities (Lnet/minecraft/client/entity/AbstractClientPlayer;)V io/qzz/nekobounce/injection/forge/mixins/render/MixinRenderPlayer/d (Lbet;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/renderByItem (Lnet/minecraft/item/ItemStack;)V io/qzz/nekobounce/injection/forge/mixins/render/MixinTileEntityItemStackRenderer/a (Lzx;)V
+MD: io/qzz/nekobounce/injection/forge/mixins/world/MixinWorld/getBlockState (Lnet/minecraft/util/BlockPos;)Lnet/minecraft/block/state/IBlockState; io/qzz/nekobounce/injection/forge/mixins/world/MixinWorld/p (Lcj;)Lalz;

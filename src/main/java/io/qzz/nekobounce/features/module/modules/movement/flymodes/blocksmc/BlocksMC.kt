@@ -27,22 +27,7 @@ import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.world.World
 
-/**
- * Fly concept originally taken from CrossSine:
- * https://github.com/shxp3/CrossSine/blob/main/src/main/java/net/ccbluex/liquidbounce/features/module/modules/movement/flights/ncp/LatestNCP.java
- *
- * Modified by @Eclipses and mixed with code from NextGen:
- * https://github.com/CCBlueX/LiquidBounce/blob/nextgen/src/main/kotlin/net/ccbluex/liquidbounce/features/module/modules/movement/fly/modes/specific/FlyNcpClip.kt
- *
- * NOTE (Before using this fly mode, READ THIS):
- * Caution: Prolonged flying over long distances is not recommended.
- *
- * Additionally, ensure that you avoid flight before you got flagged or
- * (S08 Packet) teleported, as this will flag u more, or you can wait till
- * you get the Fly message Line(153). Also avoid flying too many times (At long distance).
- *
- * @author EclipsesDev
- */
+
 object BlocksMC : FlyMode("BlocksMC"), Listenable {
 
     private var isFlying = false
