@@ -20,7 +20,7 @@ public class MixinLoader implements IFMLLoadingPlugin {
         System.out.println("[NekoBounce] Injecting with IFMLLoadingPlugin.");
 
         MixinBootstrap.init();
-        Mixins.addConfiguration("liquidbounce.forge.mixins.json");
+        Mixins.addConfiguration("nekobounce.forge.mixins.json");
         MixinEnvironment.getDefaultEnvironment().setSide(MixinEnvironment.Side.CLIENT);
     }
 
