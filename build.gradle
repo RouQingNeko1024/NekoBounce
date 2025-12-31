@@ -123,11 +123,11 @@ jar {
             "FMLCorePlugin": "io.qzz.nekobounce.injection.forge.MixinLoader",
             "FMLCorePluginContainsFMLMod": true,
             "ForceLoadAsMod": true,
-            "MixinConfigs": "liquidbounce.forge.mixins.json",
+            "MixinConfigs": "nekobounce.forge.mixins.json",
             "ModSide": "CLIENT",
             "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
             "TweakOrder": "0",
-            "FMLAT": "liquidbounce_at.cfg",
+            "FMLAT": "nekobounce_at.cfg",
             "Main-Class": "io.qzz.nekoinfo.NekoInstructionKt",
     )
 
@@ -137,7 +137,7 @@ jar {
 mixin {
     disableRefMapWarning = true
     defaultObfuscationEnv searge
-    add sourceSets.main, "liquidbounce.mixins.refmap.json"
+    add sourceSets.main, "nekobounce.mixins.refmap.json"
 }
 
 reobf {

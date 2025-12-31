@@ -1916,6 +1916,7 @@ object RenderUtils : MinecraftInstance {
         ColorUtils.setColour(-1)
     }
 
+    @JvmStatic
     fun originalRoundedRect(
         paramXStart: Float, paramYStart: Float, paramXEnd: Float, paramYEnd: Float, radius: Float, color: Int
     ) {

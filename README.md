@@ -15,71 +15,23 @@ If you notice any bugs or missing features, you can let us know by opening an is
 
 ## Used REPO:
 
--Raven XD
+-[Raven XD](https://github.com/Raven-APlus/Raven-XD-archived)
 
--Acrimony
+-[Acrimony](https://github.com/spartanoah/acrimony-client)
 
--Vegaline
+-[LiquidBounce (NextGen & Legacy)](https://github.com/CCBlueX/LiquidBounce)
 
--Excellent
+-[Rise](https://github.com/ZeathDev/Rise6.0-Src)
 
--Expensive
+-[FDP](https://github.com/SkidderMC/FDPClient/)
 
--Slack
+-[GoldBounce](https://github.com/the-OmegaLabs/GoldBounce)
 
--Untitled
+-[MoonLight](https://github.com/randomguy3725/MoonLight-public)
 
--Faiths
+-[NightSky](https://github.com/qm123pz/NightSky-Client)
 
--LiquidBounce (NextGen & Legacy)
-
--Watami
-
--Rise
-
--Tenacity
-
--Pulsive 5.0
-
--Cubk's EventManager
-
--Xylitol
-
--Nexus
-
--Atani
-
--Ketamine
-
--Radium
-
--Actinium
-
--Novoline Intent
-
--LiquidBounce Plus
-
--Eject
-
--Eclipse
-
--FDP
-
--FDPX
-
--GoldBounce
-
--MoonLight
-
--Lizz
-
--Vorte
-
--NightSky
-
--QuickMarcoBounce
-
--Augustus2.6
+-[QuickMarcoBounce](https://github.com/jiuxianqwq/QuickMarcoBounce)
 
 ## License
 This project is subject to the [GNU General Public License v3.0](LICENSE). This does only apply for source code located directly in this clean repository. During the development and compilation process, additional source code may be used to which we have obtained no rights. Such code is not covered by the GPL license.

@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "io.qzz.nekobounce.injection.forge.mixins",
-  "refmap": "liquidbounce.mixins.refmap.json",
+  "refmap": "nekobounce.mixins.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "block.MixinBlock",
