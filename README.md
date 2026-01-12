@@ -33,6 +33,35 @@ If you notice any bugs or missing features, you can let us know by opening an is
 
 -[QuickMarcoBounce](https://github.com/jiuxianqwq/QuickMarcoBounce)
 
+-[Lizz](https://github.com/L1zzLLC/Lizz)
+
+  - Vegaline
+  - Excellent
+  - Expensive
+  - Slack
+  - Untitled
+  - Faiths
+  - Watami
+  - Tenacity
+  - Pulsive 5.0
+  - Cubk's EventManager
+  - Xylitol
+  - Nexus
+  - Atani
+  - Ketamine
+  - Radium
+  - Actinium
+  - Novoline Intent
+  - LiquidBounce Plus Reborn (lmfao)
+  - Eject
+  - Eclipse
+  - Atani
+  - LiquidBouncePlusPlus
+  - Vortex
+  - Leaf
+  - Evolution
+  - Loftily
+
 ## License
 This project is subject to the [GNU General Public License v3.0](LICENSE). This does only apply for source code located directly in this clean repository. During the development and compilation process, additional source code may be used to which we have obtained no rights. Such code is not covered by the GPL license.
 
