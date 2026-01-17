@@ -6,6 +6,7 @@
 package net.ccbluex.liquidbounce.utils.client
 
 import net.ccbluex.liquidbounce.LiquidBounce.CLIENT_NAME
+import net.ccbluex.liquidbounce.features.module.modules.render.ChatPrefix
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.login.client.C01PacketEncryptionResponse
@@ -52,7 +53,13 @@ object ClientUtils : MinecraftInstance {
     }
 
     fun displayChatMessage(message: String) {
-        mc.thePlayer?.addChatMessage(ChatComponentText("§8[§b§lNekoBounce]§r §f§l» §r$message"))
+        val prefix = if (ChatPrefix.state) {
+            ChatPrefix.getFormattedPrefix()
+        } else {
+            "§8[§b§lNekoBounce]§r §f§l» §r"
+        }
+        
+        mc.thePlayer?.addChatMessage(ChatComponentText("$prefix$message"))
             ?: LOGGER.info("(MCChat) $message")
     }
 }

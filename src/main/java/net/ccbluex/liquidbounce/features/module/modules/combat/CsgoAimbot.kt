@@ -1,165 +1,218 @@
+/*
+ * LiquidBounce Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
+ * https://github.com/CCBlueX/LiquidBounce/
+ */
 package net.ccbluex.liquidbounce.features.module.modules.combat
 
-import net.ccbluex.liquidbounce.event.EventState
-import net.ccbluex.liquidbounce.event.MotionEvent
+import net.ccbluex.liquidbounce.event.Render3DEvent
+import net.ccbluex.liquidbounce.event.UpdateEvent
 import net.ccbluex.liquidbounce.event.handler
 import net.ccbluex.liquidbounce.features.module.Category
 import net.ccbluex.liquidbounce.features.module.Module
-import net.ccbluex.liquidbounce.utils.attack.EntityUtils.isSelected
-import net.ccbluex.liquidbounce.utils.extensions.*
-import net.ccbluex.liquidbounce.utils.rotation.RotationUtils
-import net.ccbluex.liquidbounce.utils.rotation.RotationUtils.currentRotation
-import net.ccbluex.liquidbounce.utils.rotation.RotationUtils.isFaced
-import net.ccbluex.liquidbounce.utils.rotation.RotationUtils.performAngleChange
-import net.ccbluex.liquidbounce.utils.rotation.RotationUtils.rotationDifference
-import net.ccbluex.liquidbounce.utils.rotation.RotationUtils.searchCenter
-import net.ccbluex.liquidbounce.utils.rotation.RotationUtils.toRotation
-import net.ccbluex.liquidbounce.utils.simulation.SimulatedPlayer
-import net.ccbluex.liquidbounce.utils.timing.MSTimer
-import net.minecraft.entity.Entity
+import net.ccbluex.liquidbounce.utils.extensions.getDistanceToEntityBox
+import net.minecraft.client.entity.EntityPlayerSP
+import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.WorldRenderer
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import java.util.*
-import kotlin.math.atan
+import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.Vec3
+import org.lwjgl.opengl.GL11
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 object CsgoAimbot : Module("CsgoAimbot", Category.COMBAT) {
-    private val range by float("Range", 4.4f, 1f..8f)
-    private val fov by float("FOV", 180f, 1f..180f)
-    private val clickDelay by int("ClickDelay", 100, 0..500)
-    private val autoClick by boolean("AutoClick", true)
-    private val lock by boolean("Lock", true)
-    private val center by boolean("Center", false)
-    private val headLock by boolean("Headlock", false) { center && lock }
-    private val headLockBlockHeight by float("HeadBlockHeight", -1f, -2f..0f) { headLock && center && lock }
-    private val breakBlocks by boolean("BreakBlocks", true)
-    private val maxAngleChange by float("MaxAngleChange", 10f, 1f..180f)
-    private val inViewMaxAngleChange by float("InViewMaxAngleChange", 35f, 1f..180f)
-
-    private var target: EntityPlayer? = null
-    private val clickTimer = MSTimer()
-
-    val onMotion = handler<MotionEvent> { event ->
-        if (event.eventState != EventState.PRE) return@handler
+    
+    private val targets = mutableListOf<EntityPlayer>()
+    private var currentTarget: EntityPlayer? = null
+    
+    val onUpdate = handler<UpdateEvent> {
+        val thePlayer = mc.thePlayer ?: return@handler
+        val theWorld = mc.theWorld ?: return@handler
         
-        val player = mc.thePlayer ?: return@handler
-        val world = mc.theWorld ?: return@handler
-
-        // 获取本玩家名字
-        val playerName = player.name
+        // 清除旧目标
+        targets.clear()
+        currentTarget = null
         
-        // 确定目标名字应包含的字符
-        val targetChar = when {
-            playerName.contains("銑") -> "銐"
-            playerName.contains("銐") -> "銑"
-            else -> {
-                // 都不包含，不自瞄
-                mc.gameSettings.keyBindUseItem.pressed = false
-                target = null
-                return@handler
+        // 寻找所有符合条件的玩家
+        for (entity in theWorld.playerEntities) {
+            if (entity == thePlayer || entity.isDead || entity.health <= 0) continue
+            
+            // 检查装备颜色是否不同
+            if (!hasDifferentEquipmentColor(thePlayer, entity)) continue
+            
+            // 检查是否可见（不能穿墙）
+            if (!isVisible(thePlayer, entity)) continue
+            
+            targets.add(entity)
+        }
+        
+        // 选择最近的目标
+        if (targets.isNotEmpty()) {
+            currentTarget = targets.minByOrNull { thePlayer.getDistanceToEntityBox(it) }
+            
+            // 瞄准目标
+            if (currentTarget != null) {
+                val rotations = getRotationsToEntity(currentTarget!!)
+                thePlayer.rotationYaw = rotations.first
+                thePlayer.rotationPitch = rotations.second
+                
+                // 模拟按住右键
+                mc.gameSettings.keyBindUseItem.pressed = true
+            }
+        } else {
+            // 没有目标时恢复右键
+            mc.gameSettings.keyBindUseItem.pressed = false
+        }
+    }
+    
+    val onRender = handler<Render3DEvent> { event ->
+        val thePlayer = mc.thePlayer ?: return@handler
+        val partialTicks = event.partialTicks
+        
+        // 为所有目标绘制红点
+        for (target in targets) {
+            if (target.isDead || target.health <= 0) continue
+            
+            val posX = target.lastTickPosX + (target.posX - target.lastTickPosX) * partialTicks
+            val posY = target.lastTickPosY + (target.posY - target.lastTickPosY) * partialTicks
+            val posZ = target.lastTickPosZ + (target.posZ - target.lastTickPosZ) * partialTicks
+            
+            // 绘制一个红色点（在目标头部位置）
+            drawPoint(posX, posY + target.eyeHeight, posZ)
+        }
+    }
+    
+    override fun onDisable() {
+        // 禁用模块时恢复右键
+        mc.gameSettings.keyBindUseItem.pressed = false
+    }
+    
+    /**
+     * 获取到实体的旋转角度
+     */
+    private fun getRotationsToEntity(entity: EntityLivingBase): Pair<Float, Float> {
+        val thePlayer = mc.thePlayer ?: return Pair(0f, 0f)
+        
+        val posX = entity.posX - thePlayer.posX
+        val posY = entity.posY + entity.eyeHeight - (thePlayer.posY + thePlayer.getEyeHeight())
+        val posZ = entity.posZ - thePlayer.posZ
+        
+        val distance = sqrt(posX * posX + posZ * posZ).toDouble()
+        
+        var yaw = (atan2(posZ, posX) * 180.0 / Math.PI).toFloat() - 90.0f
+        var pitch = (-(atan2(posY, distance) * 180.0 / Math.PI)).toFloat()
+        
+        // 规范化角度
+        yaw = yaw % 360f
+        if (yaw < 0) yaw += 360f
+        
+        pitch = pitch.coerceIn(-90f, 90f)
+        
+        return Pair(yaw, pitch)
+    }
+    
+    /**
+     * 绘制一个点（使用小的十字）
+     */
+    private fun drawPoint(x: Double, y: Double, z: Double) {
+        val thePlayer = mc.thePlayer ?: return
+        val theWorld = mc.theWorld ?: return
+        
+        val playerX = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * mc.timer.renderPartialTicks
+        val playerY = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * mc.timer.renderPartialTicks
+        val playerZ = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * mc.timer.renderPartialTicks
+        
+        val dx = x - playerX
+        val dy = y - playerY
+        val dz = z - playerZ
+        
+        GL11.glPushMatrix()
+        GL11.glTranslated(dx, dy, dz)
+        GL11.glRotatef(-mc.renderManager.playerViewY, 0f, 1f, 0f)
+        GL11.glRotatef(mc.renderManager.playerViewX, 1f, 0f, 0f)
+        
+        // 设置颜色为红色
+        GL11.glColor4f(1f, 0f, 0f, 1f)
+        GL11.glDisable(GL11.GL_TEXTURE_2D)
+        GL11.glDisable(GL11.GL_DEPTH_TEST)
+        GL11.glDepthMask(false)
+        GL11.glLineWidth(2f)
+        
+        val tessellator = Tessellator.getInstance()
+        val worldRenderer = tessellator.worldRenderer
+        
+        worldRenderer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION)
+        
+        // 绘制十字
+        val size = 0.1
+        worldRenderer.pos(-size, 0.0, 0.0).endVertex()
+        worldRenderer.pos(size, 0.0, 0.0).endVertex()
+        
+        worldRenderer.pos(0.0, -size, 0.0).endVertex()
+        worldRenderer.pos(0.0, size, 0.0).endVertex()
+        
+        worldRenderer.pos(0.0, 0.0, -size).endVertex()
+        worldRenderer.pos(0.0, 0.0, size).endVertex()
+        
+        tessellator.draw()
+        
+        GL11.glDepthMask(true)
+        GL11.glEnable(GL11.GL_DEPTH_TEST)
+        GL11.glEnable(GL11.GL_TEXTURE_2D)
+        GL11.glPopMatrix()
+    }
+    
+    /**
+     * 检查两个玩家的装备颜色是否不同
+     */
+    private fun hasDifferentEquipmentColor(player1: EntityPlayer, player2: EntityPlayer): Boolean {
+        // 比较头盔、胸甲、护腿、靴子的颜色
+        for (i in 0..3) {
+            val item1 = player1.inventory.armorInventory[i]
+            val item2 = player2.inventory.armorInventory[i]
+            
+            // 如果都有装备且物品ID相同，但损伤值不同，则认为颜色不同
+            if (item1 != null && item2 != null) {
+                if (item1.item === item2.item && item1.itemDamage != item2.itemDamage) {
+                    return true
+                }
+            }
+            
+            // 如果一个有装备一个没有装备，也认为颜色不同
+            if ((item1 != null && item2 == null) || (item1 == null && item2 != null)) {
+                return true
             }
         }
-
-        // 搜索符合条件的玩家目标
-        target = world.loadedEntityList.filter {
-            it is EntityPlayer && it != player && !it.isDead && it.name.contains(targetChar)
-        }.minByOrNull { player.getDistanceToEntityBox(it) } as? EntityPlayer
-
-        if (target == null || player.getDistanceToEntityBox(target!!) > range || 
-            rotationDifference(target!!) > fov || !player.canEntityBeSeen(target!!)) {
-            mc.gameSettings.keyBindUseItem.pressed = false
-            return@handler
-        }
-
-        // 锁定目标
-        val entity = target!!
-        if (!lock && isFaced(entity, range.toDouble())) return@handler
-
-        // 计算旋转
-        val random = Random()
-        if (!findRotation(entity, random)) return@handler
-
-        // 长按右键
-        if (autoClick && clickTimer.hasTimePassed(clickDelay)) {
-            mc.gameSettings.keyBindUseItem.pressed = true
-            clickTimer.reset()
-        }
+        return false
     }
-
-    private fun findRotation(entity: Entity, random: Random): Boolean {
-        val player = mc.thePlayer ?: return false
-
-        if (mc.playerController.isHittingBlock && breakBlocks) {
-            return false
-        }
-
-        val boundingBox = entity.hitBox
-        val (currPos, oldPos) = player.currPos to player.prevPos
-
-        val playerRotation = player.rotation
-
-        val destinationRotation = if (center) {
-            toRotation(boundingBox.center, true)
-        } else {
-            searchCenter(
-                boundingBox,
-                false,
-                outborder = false,
-                predict = true,
-                lookRange = range,
-                attackRange = 3f,
-                bodyPoints = listOf("Head", "Head"), // 只瞄准头部
-                horizontalSearch = 0f..0f
-            )
-        }
-
-        if (destinationRotation == null) {
-            player.setPosAndPrevPos(currPos, oldPos)
-            return false
-        }
-
-        // 头部锁定
-        if (headLock && center && lock) {
-            val distance = player.getDistanceToEntityBox(entity)
-            val playerEyeHeight = player.eyeHeight
-            val blockHeight = headLockBlockHeight
-
-            val pitchOffset = Math.toDegrees(atan((blockHeight + playerEyeHeight) / distance)).toFloat()
-            destinationRotation.pitch -= pitchOffset
-        }
-
-        // 计算旋转差
-        val rotationDiff = rotationDifference(playerRotation, destinationRotation)
-
-        val supposedTurnSpeed = if (rotationDiff < mc.gameSettings.fovSetting) {
-            inViewMaxAngleChange
-        } else {
-            maxAngleChange
-        }
-
-        val gaussian = random.nextGaussian()
-        val realisticTurnSpeed = rotationDiff * ((supposedTurnSpeed + (gaussian - 0.5)) / 180)
-
-        // 应用旋转
-        val rotation = performAngleChange(
-            player.rotation,
-            destinationRotation,
-            realisticTurnSpeed.toFloat(),
-            legitimize = true,
-            minRotationDiff = 0f,
-            minRotationDiffResetTiming = "OnStart",
+    
+    /**
+     * 检查目标是否可见（射线检测）
+     */
+    private fun isVisible(player: EntityPlayerSP, target: EntityPlayer): Boolean {
+        val playerEyes = Vec3(
+            player.posX,
+            player.posY + player.getEyeHeight(),
+            player.posZ
         )
-
-        rotation.toPlayer(player, true, true)
-
-        player.setPosAndPrevPos(currPos, oldPos)
-
-        return true
+        
+        val targetEyes = Vec3(
+            target.posX,
+            target.posY + target.getEyeHeight(),
+            target.posZ
+        )
+        
+        // 进行视线检测
+        return mc.theWorld.rayTraceBlocks(
+            playerEyes,
+            targetEyes,
+            false,
+            true,
+            false
+        ) == null
     }
-
-    override fun onDisable() {
-        mc.gameSettings.keyBindUseItem.pressed = false
-        target = null
-    }
-
-    override val tag: String?
-        get() = target?.name
 }

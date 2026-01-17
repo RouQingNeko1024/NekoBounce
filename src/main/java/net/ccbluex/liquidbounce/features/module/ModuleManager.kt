@@ -41,6 +41,11 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
 
         // Register modules
         val modules = arrayOf(
+                ChatPrefix,
+                KillESP,
+                Block,
+                AutoText,
+                NameTags3,
                 Fucker2,
                 CollideBoost,
                 NoSlowDown,
@@ -80,7 +85,7 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
                 OldFDPNoWeb,
                 OldFDPHighJump,
                 FireFlies,
-                Glint,
+                GlowESP,
                 Scaffold2,
                 TargetStrafe,
                 LongJump2,
