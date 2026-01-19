@@ -41,6 +41,8 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
 
         // Register modules
         val modules = arrayOf(
+                ESP2,
+                UltimateVelocity,
                 ChatPrefix,
                 KillESP,
                 Block,
