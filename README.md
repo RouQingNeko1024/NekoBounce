@@ -1,6 +1,6 @@
 <div align="center">
 <p>
-    <img width="250" src="https://github.com/RouQingNeko1024/NekoBounce/blob/main/src/main/resources/assets/minecraft/liquidbounce/logo_background.png">
+    <img width="250" src="https://raw.githubusercontent.com/CCBlueX/LiquidCloud/master/NekoBounce/NekoBounceLogo.svg">
 </p>
     
 杂牌水，但是这是猫娘的水
@@ -44,6 +44,7 @@ A free mixin-based injection hacked-client for Minecraft using Minecraft Forge, 
   - Vortex
   - Leaf
   - Opai
+  - Evolution
   - Loftily
   - Epilogue
   - Augustus B2.6
