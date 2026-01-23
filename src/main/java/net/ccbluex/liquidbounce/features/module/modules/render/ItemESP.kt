@@ -38,7 +38,7 @@ object ItemESP : Module("ItemESP", Category.RENDER) {
 
     private val color by color("Color", Color.GREEN)
 
-    private val maxRenderDistance by int("MaxRenderDistance", 50, 1..200).onChanged { value ->
+    private val maxRenderDistance by int("MaxRenderDistance", 50, 1..20000).onChanged { value ->
         maxRenderDistanceSq = value.toDouble().pow(2)
     }
 

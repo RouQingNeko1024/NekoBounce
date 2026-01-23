@@ -229,8 +229,8 @@ object NameTags3 : Module("NameTags3", Category.RENDER) {
         // Minecraft颜色代码：§ = \u00A7
         val sectionChar = '\u00A7'
         
-        val teamPart = "[${sectionChar}7$teamChar]"  // 使用灰色显示队伍字母
-        val userPart = if (isRenderingSelf) "[${sectionChar}9User{sectionChar}] " else ""
+        val teamPart = "[${sectionChar}7$teamChar${sectionChar}r]"  // 使用灰色显示队伍字母
+        val userPart = if (isRenderingSelf) "[${sectionChar}9User${sectionChar}r] " else ""
         val namePart = "${sectionChar}f$name${sectionChar}r "
         val healthPart = if (health) "[${sectionChar}c${healthString}♥${sectionChar}r]" else ""
         val pingPart = if (ping && entity is EntityPlayer) "[${sectionChar}6${playerPing}ms${sectionChar}r]" else ""

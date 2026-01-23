@@ -41,6 +41,13 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
 
         // Register modules
         val modules = arrayOf(
+                KillAura4,
+                Disco,
+                AutoPathFinder,
+                Velocity3,
+                VelocityClick,
+                Fog,
+                TargetESP,
                 ESP2,
                 UltimateVelocity,
                 ChatPrefix,

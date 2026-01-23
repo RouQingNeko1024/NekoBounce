@@ -1,8 +1,4 @@
-/*
- * LiquidBounce Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/CCBlueX/LiquidBounce/
- */
+//Code By NekoAi
 package net.ccbluex.liquidbounce.features.module.modules.render
 
 import net.ccbluex.liquidbounce.event.*
@@ -25,12 +21,9 @@ import kotlin.math.*
 
 object ESP2 : Module("ESP2", Category.RENDER) {
 
-    // ==================== 主开关和分类 ====================
     val moduleEnabled by boolean("Enabled", true)
     val renderCategory by choices("Category", arrayOf("All", "Players", "Mobs", "Animals", "Items", "Vehicles", "Projectiles"), "All")
     
-    // ==================== 实体类型详细过滤 ====================
-    // 玩家相关
     val players by boolean("Players", true)
     val teammates by boolean("Teammates", true)
     val enemies by boolean("Enemies", true)
@@ -528,25 +521,21 @@ object ESP2 : Module("ESP2", Category.RENDER) {
     val ignoreNPCs by boolean("IgnoreNPCs", false)
     val ignoreBots by boolean("IgnoreBots", false)
     
-    // 距离过滤
     val maxDistance by int("MaxDistance", 100, 0..1000)
     val minDistance by int("MinDistance", 0, 0..500)
     val distanceFadeEnabled by boolean("DistanceFade", true)
     val distanceFadeStartValue by int("DistFadeStartValue", 50, 0..500)
     val distanceFadeEndValue by int("DistFadeEndValue", 100, 0..500)
     
-    // 生命值过滤
     val minHealth by float("MinHealth", 0f, 0f..1000f)
     val maxHealth by float("MaxHealth", 1000f, 0f..10000f)
     val healthFilterMode by choices("HealthFilterMode", arrayOf("Less", "Greater", "Between", "Equal"), "Between")
     
-    // 角度过滤
     val fovLimit by float("FOVLimit", 180f, 0f..360f)
     val angleFilter by boolean("AngleFilter", false)
     val minAngle by float("MinAngle", 0f, 0f..360f)
     val maxAngle by float("MaxAngle", 360f, 0f..360f)
     
-    // 环境过滤
     val onlyVisible by boolean("OnlyVisible", false)
     val visibleCheckType by choices("VisibleCheckType", arrayOf("Raycast", "LOS", "Simple", "Advanced"), "Raycast")
     val visibleCheckRange by int("VisibleCheckRange", 100, 0..500)
@@ -556,25 +545,21 @@ object ESP2 : Module("ESP2", Category.RENDER) {
     val renderInAir by boolean("RenderInAir", true)
     val renderOnGround by boolean("RenderOnGround", true)
     
-    // 时间过滤
     val timeFilter by boolean("TimeFilter", false)
     val dayOnly by boolean("DayOnly", false)
     val nightOnly by boolean("NightOnly", false)
     val timeStart by int("TimeStart", 0, 0..24000)
     val timeEnd by int("TimeEnd", 24000, 0..24000)
     
-    // 生物群系过滤
     val biomeFilter by boolean("BiomeFilter", false)
     val allowedBiomes by text("AllowedBiomes", "plains,forest,mountains")
     val excludedBiomes by text("ExcludedBiomes", "ocean,desert")
     
-    // 维度过滤
     val dimensionFilter by boolean("DimensionFilter", false)
     val overworldOnly by boolean("OverworldOnly", false)
     val netherOnly by boolean("NetherOnly", false)
     val endOnly by boolean("EndOnly", false)
     
-    // 难度过滤
     val difficultyFilter by boolean("DifficultyFilter", false)
     val peacefulOnly by boolean("PeacefulOnly", false)
     val easyOnly by boolean("EasyOnly", false)
