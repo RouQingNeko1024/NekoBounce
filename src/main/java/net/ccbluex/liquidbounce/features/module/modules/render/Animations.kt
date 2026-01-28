@@ -13,7 +13,7 @@ import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.renderer.GlStateManager.*
 import net.minecraft.util.MathHelper
 import org.lwjgl.opengl.GL11.glTranslated
-import org.lwjgl.opengl.GL11.glTranslatef
+import org.lwjgl.opengl.GL11.glRotatef
 
 /**
  * Animations module
@@ -184,7 +184,6 @@ class OldPushdownAnimation : Animation("OldPushdown") {
         rotate(-80f, 1f, 0f, 0f)
         rotate(60f, 0f, 1f, 0f)
         glTranslated(1.05, 0.35, 0.4)
-        glTranslatef(-1f, 0f, 0f)
     }
 }
 
@@ -464,7 +463,6 @@ class SigmaAnimation : Animation("Sigma") {
         rotate(-var9 * 45f, 1.0f, var9 / 2, -0.0f)
         doBlockTransformations()
         glTranslated(1.2, 0.3, 0.5)
-        glTranslatef(-1f, if (mc.thePlayer.isSneaking) -0.1f else -0.2f, 0.2f)
     }
 }
 
@@ -476,7 +474,6 @@ class SlideAnimation : Animation("Slide") {
         translate(-0.4f, 0.3f, 0.0f)
         rotate(-var9 * 35.0f, -8.0f, -0.0f, 9.0f)
         rotate(-var9 * 70.0f, 1.0f, -0.4f, -0.0f)
-        glTranslatef(-0.05f, if (mc.thePlayer.isSneaking) -0.2f else 0.0f, 0.1f)
     }
 }
 
@@ -608,37 +605,42 @@ class XinXinAnimation : Animation("XinXin") {
     private val rotationTimer = MSTimer()
     
     override fun transform(f1: Float, f: Float, clientPlayer: AbstractClientPlayer) {
-
-        val isBlocking = mc.thePlayer?.isBlocking == true
+        val thePlayer = mc.thePlayer ?: return
+        
+        val isBlocking = thePlayer.isBlocking
+        
+        // 应用缩放
+        scale(Animations.xinxinScale, Animations.xinxinScale, Animations.xinxinScale)
         
         if (isBlocking) {
-
+            // 格挡情况下正常格挡动画
             transformFirstPersonItem(f, f1)
             doBlockTransformations()
             translate(-0.5f, 0.2f, 0f)
         } else {
-
+            // 正常情况下：先应用标准动画变换
             transformFirstPersonItem(f, f1)
+            
+            // 然后以物品为中心进行旋转
+            // 移动到物品中心位置
             val centerX = 0.0
             val centerY = 0.0
             val centerZ = 0.0
             
-
             glTranslated(centerX, centerY, centerZ)
             
-
-            rotate(rotationAngle, 0f, 1f, 0f)
+            // 顺时针旋转（负角度）
+            rotate(-rotationAngle, 0f, 1f, 0f)
             
+            // 移回
             glTranslated(-centerX, -centerY, -centerZ)
             
-
-            if (rotationTimer.hasTimePassed(16L)) { // 约60FPS更新
+            // 更新旋转角度
+            if (rotationTimer.hasTimePassed(16L)) {
                 rotationAngle += Animations.xinxinRotationSpeed
-                if (rotationAngle > 360f) rotationAngle = 0f
+                if (rotationAngle >= 360f) rotationAngle = 0f
                 rotationTimer.reset()
             }
         }
-        
-        scale(Animations.xinxinScale, Animations.xinxinScale, Animations.xinxinScale)
     }
 }

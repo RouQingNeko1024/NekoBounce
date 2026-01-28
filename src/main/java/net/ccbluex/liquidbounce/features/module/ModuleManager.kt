@@ -41,6 +41,9 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
 
         // Register modules
         val modules = arrayOf(
+                GPUBurner,
+                Killaura5,
+                GrimFly,
                 KillAura4,
                 Disco,
                 AutoPathFinder,

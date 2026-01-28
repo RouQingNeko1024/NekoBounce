@@ -28,7 +28,7 @@ import net.ccbluex.liquidbounce.utils.GlowUtils
 import net.minecraft.scoreboard.ScoreObjective
 import net.minecraft.scoreboard.ScorePlayerTeam
 import net.minecraft.util.EnumChatFormatting
-import org.lwjgl.opengl.GL11.glColor4f
+import org.lwjgl.opengl.GL11.*
 import java.awt.Color
 import kotlin.math.abs
 
@@ -45,6 +45,12 @@ class ScoreboardElement(
     private val backgroundColor by color("BackgroundColor", Color.BLACK.withAlpha(128))
     private val roundedRectRadius by float("Rounded-Radius", 3F, 0F..5F)
 
+    // 渐变背景设置
+    private val gradientBackground by boolean("GradientBackground", false)
+    private val leftColor by color("LeftColor", Color.BLACK.withAlpha(50)) { gradientBackground }
+    private val rightColor by color("RightColor", Color.BLACK.withAlpha(200)) { gradientBackground }
+    private val gradientDirection by choices("GradientDirection", arrayOf("LeftToRight", "RightToLeft", "TopToBottom", "BottomToTop"), "LeftToRight") { gradientBackground }
+
     // 添加阴影设置
     private val shadow by boolean("Shadow", false)
     private val shadowStrength by int("ShadowStrength", 1, 1..2) { shadow }
@@ -57,10 +63,118 @@ class ScoreboardElement(
     private val titleRectExtraHeight by int("TitleRectExtraHeight", 5, 0..20) { drawRectOnTitle }
     private val rectHeightPadding by int("TitleRectHeightPadding", 0, 0..10) { drawRectOnTitle }
 
-    private val serverIp by choices("ServerIP", arrayOf("Normal", "None", "Client", "Website","qwq" ,"风格岛" ,"Cat","Styles","Flux"), "Client")
+    private val serverIp by choices("ServerIP", arrayOf("Normal", "None", "Client", "Website","qwq" ,"风格岛" ,"Cat","Styles","Flux","花雨庭","柔情","xinxin","Fdp"), "Client")
     private val number by boolean("Number", false)
     private val textShadow by boolean("TextShadow", false)
     private val font by font("Font", Fonts.fontSemibold35)
+
+    // 绘制渐变背景 - 使用LiquidBounce的渲染系统
+    private fun drawGradientBackground(minX: Int, minY: Int, maxX: Int, maxY: Int, corners: RenderUtils.RoundedCorners) {
+        if (!gradientBackground) return
+
+        val width = maxX - minX
+        val height = maxY - minY
+        
+        // 保存GL状态
+        glPushAttrib(GL_ALL_ATTRIB_BITS)
+        glPushMatrix()
+        
+        glDisable(GL_TEXTURE_2D)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glShadeModel(GL_SMOOTH)
+        
+        glBegin(GL_QUADS)
+        
+        when (gradientDirection) {
+            "LeftToRight" -> {
+                // 从左到右渐变
+                glColor4f(
+                    leftColor.red / 255f,
+                    leftColor.green / 255f,
+                    leftColor.blue / 255f,
+                    leftColor.alpha / 255f
+                )
+                glVertex2i(minX, minY)
+                glVertex2i(minX, maxY)
+                glColor4f(
+                    rightColor.red / 255f,
+                    rightColor.green / 255f,
+                    rightColor.blue / 255f,
+                    rightColor.alpha / 255f
+                )
+                glVertex2i(maxX, maxY)
+                glVertex2i(maxX, minY)
+            }
+            "RightToLeft" -> {
+                // 从右到左渐变
+                glColor4f(
+                    rightColor.red / 255f,
+                    rightColor.green / 255f,
+                    rightColor.blue / 255f,
+                    rightColor.alpha / 255f
+                )
+                glVertex2i(minX, minY)
+                glVertex2i(minX, maxY)
+                glColor4f(
+                    leftColor.red / 255f,
+                    leftColor.green / 255f,
+                    leftColor.blue / 255f,
+                    leftColor.alpha / 255f
+                )
+                glVertex2i(maxX, maxY)
+                glVertex2i(maxX, minY)
+            }
+            "TopToBottom" -> {
+                // 从上到下渐变
+                glColor4f(
+                    leftColor.red / 255f,
+                    leftColor.green / 255f,
+                    leftColor.blue / 255f,
+                    leftColor.alpha / 255f
+                )
+                glVertex2i(minX, minY)
+                glVertex2i(maxX, minY)
+                glColor4f(
+                    rightColor.red / 255f,
+                    rightColor.green / 255f,
+                    rightColor.blue / 255f,
+                    rightColor.alpha / 255f
+                )
+                glVertex2i(maxX, maxY)
+                glVertex2i(minX, maxY)
+            }
+            "BottomToTop" -> {
+                // 从下到上渐变
+                glColor4f(
+                    rightColor.red / 255f,
+                    rightColor.green / 255f,
+                    rightColor.blue / 255f,
+                    rightColor.alpha / 255f
+                )
+                glVertex2i(minX, minY)
+                glVertex2i(maxX, minY)
+                glColor4f(
+                    leftColor.red / 255f,
+                    leftColor.green / 255f,
+                    leftColor.blue / 255f,
+                    leftColor.alpha / 255f
+                )
+                glVertex2i(maxX, maxY)
+                glVertex2i(minX, maxY)
+            }
+        }
+        
+        glEnd()
+        
+        // 恢复GL状态
+        glShadeModel(GL_FLAT)
+        glEnable(GL_TEXTURE_2D)
+        glDisable(GL_BLEND)
+        
+        glPopMatrix()
+        glPopAttrib()
+    }
 
     // 阴影绘制函数
     private fun showShadow(startX: Float, startY: Float, width: Float, height: Float) {
@@ -141,154 +255,175 @@ class ScoreboardElement(
                 showShadow(shadowX.toFloat(), shadowY.toFloat(), shadowWidth.toFloat(), shadowHeight.toFloat())
             }
 
-            withClipping(main = {
-                val corners = if (rect) {
-                    if (side.horizontal != Side.Horizontal.LEFT) {
-                        RenderUtils.RoundedCorners.LEFT_ONLY
-                    } else {
-                        RenderUtils.RoundedCorners.RIGHT_ONLY
-                    }
-                } else {
-                    RenderUtils.RoundedCorners.ALL
-                }
-
-                drawRoundedRectInt(
-                    minX,
-                    -(4 + inc),
-                    maxX,
-                    maxHeight + fontHeight + 2,
-                    backColor,
-                    roundedRectRadius,
-                    corners
-                )
-            }, toClip = {
-                scoreCollection.filterNotNull().forEachIndexed { index, score ->
-                    val team = scoreboard.getPlayersTeam(score.playerName)
-
-                    var name = ScorePlayerTeam.formatPlayerName(team, score.playerName)
-                    val scorePoints = if (number) "${EnumChatFormatting.RED}${score.scorePoints}" else ""
-
-                    val height = maxHeight - index * fontHeight.toFloat()
-
-                    glColor4f(1f, 1f, 1f, 1f)
-
-                    if (serverIp != "Normal") {
-                        try {
-                            val nameWithoutFormatting = name?.replace(EnumChatFormatting.RESET.toString(), "")
-                                ?.replace(Regex("[\u00a7&][0-9a-fk-or]"), "")?.trim()
-                            val trimmedServerIP = mc.currentServerData?.serverIP?.trim()?.lowercase() ?: ""
-
-                            val domainRegex =
-Regex("\\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\\b|欧|OMG|onmygod|@|工作室|KKC|Domcer|network|kkc|weipu|布吉岛|像素未来|国际版", RegexOption.IGNORE_CASE)
-                            val containsDomain = nameWithoutFormatting?.let { domainRegex.containsMatchIn(it) } == true
-
-                            runCatching {
-                                if (nameWithoutFormatting?.lowercase() == trimmedServerIP || containsDomain) {
-                                    val colorCode = name?.substring(0, 2) ?: "§9"
-                                    name = when (serverIp.lowercase()) {
-                                        "none" -> ""
-                                        "client" -> "§b§lNekoBounce"
-                                        "website" -> "§b§lNekoBounce.qzz.io"
-                                        "cat" -> "§b§l柔情猫娘"
-                                        "qwq" -> "§b§l猫娘客户端"
-                                        "风格岛" -> "§b§l风格岛"
-                                        "styles" -> "§bstyles.wtf"
-                                        "flux" -> "§bflux.today"
-                                        else -> return null
-                                    }
-                                }
-                            }.onFailure {
-                                LOGGER.error("Error while changing Scoreboard Server IP: ${it.message}")
-                            }
-                        } catch (e: Exception) {
-                            LOGGER.error("Error while drawing ScoreboardElement", e)
+            // 修复withClipping调用，使用正确的参数格式
+            withClipping(
+                {
+                    val corners = if (rect) {
+                        if (side.horizontal != Side.Horizontal.LEFT) {
+                            RenderUtils.RoundedCorners.LEFT_ONLY
+                        } else {
+                            RenderUtils.RoundedCorners.RIGHT_ONLY
                         }
+                    } else {
+                        RenderUtils.RoundedCorners.ALL
                     }
 
-                    val textX = if (side.horizontal != Side.Horizontal.LEFT) {
-                        l1
+                    if (gradientBackground) {
+                        // 绘制渐变背景
+                        drawGradientBackground(
+                            minX,
+                            -(4 + inc),
+                            maxX,
+                            maxHeight + fontHeight + 2,
+                            corners
+                        )
                     } else {
-                        minX + 4
-                    }.toFloat()
-
-                    fontRenderer.drawString(name, textX, height, textColor, textShadow)
-                    if (number) {
-                        fontRenderer.drawString(
-                            scorePoints,
-                            (numberX - font.getStringWidth(scorePoints)).toFloat(),
-                            height,
-                            textColor,
-                            textShadow
+                        // 绘制普通背景
+                        drawRoundedRectInt(
+                            minX,
+                            -(4 + inc),
+                            maxX,
+                            maxHeight + fontHeight + 2,
+                            backColor,
+                            roundedRectRadius,
+                            corners
                         )
                     }
+                },
+                {
+                    scoreCollection.filterNotNull().forEachIndexed { index, score ->
+                        val team = scoreboard.getPlayersTeam(score.playerName)
 
-                    if (index == scoreCollection.size - 1) {
-                        val title = objective.displayName ?: ""
-                        val displayName = if (serverIp != "Normal") {
-                            try {
-                                val nameWithoutFormatting = title.replace(EnumChatFormatting.RESET.toString(), "")
-                                    .replace(Regex("[\u00a7&][0-9a-fk-or]"), "").trim()
-                                val trimmedServerIP = mc.currentServerData?.serverIP?.trim()?.lowercase() ?: ""
+                        var name = ScorePlayerTeam.formatPlayerName(team, score.playerName)
+                        val scorePoints = if (number) "${EnumChatFormatting.RED}${score.scorePoints}" else ""
 
-                                val domainRegex =
-                                    Regex("\\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\\b")
-                                val containsDomain =
-                                    nameWithoutFormatting.let { domainRegex.containsMatchIn(it) } == true
-
-                                if (nameWithoutFormatting.lowercase() == trimmedServerIP || containsDomain) {
-                                    val colorCode = title.substring(0, 2)
-                                    when (serverIp.lowercase()) {
-                                        "none" -> ""
-                                        "client" -> "$colorCode$CLIENT_NAME"
-                                        "website" -> "$colorCode$CLIENT_WEBSITE"
-                                        else -> return null
-                                    }
-                                } else title
-                            } catch (e: Exception) {
-                                LOGGER.error("Error while drawing ScoreboardElement", e)
-                                title
-                            }
-                        } else title
-
-                        if (drawRectOnTitle) {
-                            drawRect(minX, -(4 + inc), maxX, fontHeight - inc + rectHeightPadding, titleRectColor.rgb)
-                        }
+                        val height = maxHeight - index * fontHeight.toFloat()
 
                         glColor4f(1f, 1f, 1f, 1f)
 
-                        fontRenderer.drawString(
-                            displayName,
-                            (minX..maxX).lerpWith(0.5F) - fontRenderer.getStringWidth(displayName) / 2,
-                            height - fontHeight - inc,
-                            textColor,
-                            textShadow
-                        )
-                    }
+                        if (serverIp != "Normal") {
+                            try {
+                                val nameWithoutFormatting = name?.replace(EnumChatFormatting.RESET.toString(), "")
+                                    ?.replace(Regex("[\u00a7&][0-9a-fk-or]"), "")?.trim()
+                                val trimmedServerIP = mc.currentServerData?.serverIP?.trim()?.lowercase() ?: ""
 
-                    indexRects += {
-                        if (rect) {
-                            val rectColor = when {
-                                this.rectColor.rainbow -> ColorUtils.rainbow(400000000L * index).rgb
-                                else -> this.rectColor.selectedColor().rgb
+                                val domainRegex =
+Regex("\\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\\b|欧|OMG|onmygod|@|工作室|KKC|Domcer|network|kkc|weipu|布吉岛|像素未来|国际版|庭", RegexOption.IGNORE_CASE)
+                                val containsDomain = nameWithoutFormatting?.let { domainRegex.containsMatchIn(it) } ?: false
+
+                                runCatching {
+                                    if (nameWithoutFormatting?.lowercase() == trimmedServerIP || containsDomain) {
+                                        val colorCode = name?.substring(0, 2) ?: "§9"
+                                        name = when (serverIp.lowercase()) {
+                                            "none" -> ""
+                                            "client" -> "§b§lNekoBounce"
+                                            "website" -> "§b§lNekoBounce.qzz.io"
+                                            "cat" -> "§b§l柔情猫娘"
+                                            "qwq" -> "§b§l猫娘客户端"
+                                            "风格岛" -> "§b§l风格岛"
+                                            "styles" -> "§bstyles.wtf"
+                                            "flux" -> "§bflux.today"
+                                            "花雨庭" -> "§c❀§b 花雨庭 §c❀§r"
+                                            "柔情" -> "§c❀§b 柔情猫娘 §c❀§r"
+                                            "xinxin" -> "§b免费heshuyou.xyz§r"
+                                            "Fdp" -> "§7[§b§lFDPClient§r§7]"
+                                            else -> name
+                                        }
+                                    }
+                                }.onFailure { e ->
+                                    LOGGER.error("Error while changing Scoreboard Server IP: ${e.message}")
+                                }
+                            } catch (e: Exception) {
+                                LOGGER.error("Error while drawing ScoreboardElement", e)
+                            }
+                        }
+
+                        val textX = if (side.horizontal != Side.Horizontal.LEFT) {
+                            l1
+                        } else {
+                            minX + 4
+                        }.toFloat()
+
+                        fontRenderer.drawString(name, textX, height, textColor, textShadow)
+                        if (number) {
+                            fontRenderer.drawString(
+                                scorePoints,
+                                (numberX - font.getStringWidth(scorePoints)).toFloat(),
+                                height,
+                                textColor,
+                                textShadow
+                            )
+                        }
+
+                        if (index == scoreCollection.size - 1) {
+                            val title = objective.displayName
+                            val displayName = if (serverIp != "Normal") {
+                                try {
+                                    val nameWithoutFormatting = title.replace(EnumChatFormatting.RESET.toString(), "")
+                                        .replace(Regex("[\u00a7&][0-9a-fk-or]"), "").trim()
+                                    val trimmedServerIP = mc.currentServerData?.serverIP?.trim()?.lowercase() ?: ""
+
+                                    val domainRegex =
+                                        Regex("\\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\\b")
+                                    val containsDomain =
+                                        nameWithoutFormatting.let { domainRegex.containsMatchIn(it) } == true
+
+                                    if (nameWithoutFormatting.lowercase() == trimmedServerIP || containsDomain) {
+                                        val colorCode = title.substring(0, 2)
+                                        when (serverIp.lowercase()) {
+                                            "none" -> ""
+                                            "client" -> "$colorCode$CLIENT_NAME"
+                                            "website" -> "$colorCode$CLIENT_WEBSITE"
+                                            else -> title
+                                        }
+                                    } else title
+                                } catch (e: Exception) {
+                                    LOGGER.error("Error while drawing ScoreboardElement", e)
+                                    title
+                                }
+                            } else title
+
+                            if (drawRectOnTitle) {
+                                drawRect(minX, -(4 + inc), maxX, fontHeight - inc + rectHeightPadding, titleRectColor.rgb)
                             }
 
-                            drawRoundedRect(
-                                (if (side.horizontal != Side.Horizontal.LEFT) maxX + 4 else minX - 4).toFloat(),
-                                (if (index == scoreCollection.size - 1) -2F else height) - inc - 2F,
-                                (if (side.horizontal != Side.Horizontal.LEFT) maxX else minX).toFloat(),
-                                (if (index == 0) fontHeight.toFloat() else height + fontHeight * 2F) + 2F,
-                                rectColor,
-                                roundedRectRadius,
-                                if (side.horizontal != Side.Horizontal.LEFT) {
-                                    RenderUtils.RoundedCorners.RIGHT_ONLY
-                                } else {
-                                    RenderUtils.RoundedCorners.LEFT_ONLY
-                                }
+                            glColor4f(1f, 1f, 1f, 1f)
+
+                            fontRenderer.drawString(
+                                displayName,
+                                (minX..maxX).lerpWith(0.5F) - fontRenderer.getStringWidth(displayName) / 2,
+                                height - fontHeight - inc,
+                                textColor,
+                                textShadow
                             )
+                        }
+
+                        indexRects += {
+                            if (rect) {
+                                val rectColor = if (this.rectColor.rainbow) {
+                                    ColorUtils.rainbow(400000000L * index).rgb
+                                } else {
+                                    this.rectColor.selectedColor().rgb
+                                }
+
+                                drawRoundedRect(
+                                    (if (side.horizontal != Side.Horizontal.LEFT) maxX + 4 else minX - 4).toFloat(),
+                                    (if (index == scoreCollection.size - 1) -2F else height) - inc - 2F,
+                                    (if (side.horizontal != Side.Horizontal.LEFT) maxX else minX).toFloat(),
+                                    (if (index == 0) fontHeight.toFloat() else height + fontHeight * 2F) + 2F,
+                                    rectColor,
+                                    roundedRectRadius,
+                                    if (side.horizontal != Side.Horizontal.LEFT) {
+                                        RenderUtils.RoundedCorners.RIGHT_ONLY
+                                    } else {
+                                        RenderUtils.RoundedCorners.LEFT_ONLY
+                                    }
+                                )
+                            }
                         }
                     }
                 }
-            })
+            )
 
             indexRects.removeEach { it(); true }
 
@@ -297,5 +432,4 @@ Regex("\\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\
 
         return null
     }
-
 }
