@@ -10,7 +10,6 @@ import net.ccbluex.liquidbounce.features.module.modules.player.NoFall
 import net.ccbluex.liquidbounce.features.module.modules.player.NoFall.autoMLG
 import net.ccbluex.liquidbounce.features.module.modules.player.NoFall.currentMlgBlock
 import net.ccbluex.liquidbounce.features.module.modules.player.NoFall.maxRetrievalWaitingTime
-import net.ccbluex.liquidbounce.features.module.modules.player.NoFall.options
 import net.ccbluex.liquidbounce.features.module.modules.player.NoFall.retrieveDelay
 import net.ccbluex.liquidbounce.features.module.modules.player.NoFall.retrievingPos
 import net.ccbluex.liquidbounce.features.module.modules.player.NoFall.swing
@@ -56,11 +55,8 @@ object MLG : NoFallMode("MLG") {
                 return@let
             }
 
-            RotationUtils.setTargetRotation(
-                toRotation(it),
-                options,
-                if (options.keepRotation) options.resetTicks else 1
-            )
+            // 使用直接设置服务器旋转的方式
+            RotationUtils.serverRotation = toRotation(it)
         }
 
         mlgSlot ?: return
@@ -127,9 +123,8 @@ object MLG : NoFallMode("MLG") {
                 val inc = 0.2 * min(player.fallDistance / 30F, 1F)
 
                 faceBlock(pos, targetUpperFace = true, hRange = 0.3 + inc..0.701 - inc)?.run {
-                    RotationUtils.setTargetRotation(
-                        rotation, options, if (options.keepRotation) options.resetTicks else 1
-                    )
+                    // 使用直接设置服务器旋转的方式
+                    RotationUtils.serverRotation = rotation
                 }
             }
 

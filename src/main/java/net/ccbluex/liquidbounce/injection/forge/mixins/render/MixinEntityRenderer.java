@@ -6,6 +6,7 @@
 package net.ccbluex.liquidbounce.injection.forge.mixins.render;
 
 import com.google.common.base.Predicates;
+import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.EventManager;
 import net.ccbluex.liquidbounce.event.Render3DEvent;
 import net.ccbluex.liquidbounce.features.module.modules.combat.Backtrack;
@@ -19,6 +20,7 @@ import net.ccbluex.liquidbounce.utils.rotation.RotationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,6 +30,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -35,6 +38,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.nio.FloatBuffer;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -91,10 +96,6 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo callbackInfo) {
-        /*
-          This is done so it supports Opti-Fine while also supporting any mod that cancels the ForgeHooksClient.renderFirstPersonHand event.
-          For example, OrangeMarshall's 1.7 Animations mod.
-         */
         if (ClientUtils.INSTANCE.getProfilerName().equals("hand")) {
             FreeLook.INSTANCE.runWithoutSavingRotations(() -> {
                 FreeLook.INSTANCE.restoreOriginalRotation();
@@ -133,9 +134,6 @@ public abstract class MixinEntityRenderer {
         FreeCam.INSTANCE.restoreOriginalPosition();
     }
 
-    /**
-     * @author CCBlueX
-     */
     @Inject(method = "getMouseOver", at = @At("HEAD"), cancellable = true)
     private void getMouseOver(float p_getMouseOver_1_, CallbackInfo ci) {
         Entity entity = mc.getRenderViewEntity();
@@ -155,7 +153,6 @@ public abstract class MixinEntityRenderer {
             double d1 = d0;
             boolean flag = false;
             if (mc.playerController.extendedReach()) {
-                // d0 = 6;
                 d1 = 6;
             } else if (d0 > 3) {
                 flag = true;
@@ -238,10 +235,6 @@ public abstract class MixinEntityRenderer {
         ci.cancel();
     }
 
-    /**
-     * @author opZywl
-     * @reason Update Light Map
-     */
     @Inject(method = "updateLightmap", at = @At("HEAD"), cancellable = true)
     private void updateLightmap(float p_updateLightmap_1_, CallbackInfo ci) {
         final Ambience ambience = Ambience.INSTANCE;
@@ -363,9 +356,6 @@ public abstract class MixinEntityRenderer {
         ci.cancel();
     }
 
-    /**
-     * Properly implement the confusion option from AntiBlind module
-     */
     @Redirect(method = "setupCameraTransform", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;isPotionActive(Lnet/minecraft/potion/Potion;)Z"))
     private boolean injectAntiBlindA(EntityPlayerSP instance, Potion potion) {
         AntiBlind module = AntiBlind.INSTANCE;
@@ -382,5 +372,74 @@ public abstract class MixinEntityRenderer {
         AntiBlind module = AntiBlind.INSTANCE;
 
         return (!module.handleEvents() || !module.getConfusionEffect()) && instance.isPotionActive(potion);
+    }
+
+    /**
+     * Fog模块的注入点 - 修改雾效果
+     * 使用TAIL注入，以便在原版设置后覆盖，确保天空等渲染也生效
+     */
+    @Inject(method = "setupFog", at = @At("TAIL"))
+    private void injectFog(int startCoords, float partialTicks, CallbackInfo ci) {
+        Fog fogModule = Fog.INSTANCE;
+        
+        if (fogModule != null && fogModule.handleEvents()) {
+            // 获取雾模块参数
+            float fogStart = fogModule.getFogStart();
+            float fogEnd = fogModule.getFogEnd();
+            float fogDensity = fogModule.getFogDensity();
+            int fogType = fogModule.getGlFogType();
+            int fogColor = fogModule.getFogColor();
+            
+            // 确保雾启用
+            GL11.glEnable(GL11.GL_FOG);
+            
+            // 设置雾模式
+            GL11.glFogi(GL11.GL_FOG_MODE, fogType);
+            
+            // 设置雾密度
+            GL11.glFogf(GL11.GL_FOG_DENSITY, fogDensity);
+            
+            // 设置雾起始和结束距离
+            GL11.glFogf(GL11.GL_FOG_START, fogStart);
+            GL11.glFogf(GL11.GL_FOG_END, fogEnd);
+            
+            // 设置雾颜色 - 使用直接的FloatBuffer
+            float r = ((fogColor >> 16) & 0xFF) / 255.0f;
+            float g = ((fogColor >> 8) & 0xFF) / 255.0f;
+            float b = (fogColor & 0xFF) / 255.0f;
+            
+            // 使用allocateDirect创建直接的缓冲区（4个float = 16字节）
+            FloatBuffer buffer = ByteBuffer.allocateDirect(16).asFloatBuffer();
+            buffer.put(r);
+            buffer.put(g);
+            buffer.put(b);
+            buffer.put(1.0f);
+            buffer.flip();
+            
+            GL11.glFog(GL11.GL_FOG_COLOR, buffer);
+            
+            // 设置雾提示
+            GL11.glHint(GL11.GL_FOG_HINT, GL11.GL_NICEST);
+        }
+    }
+
+    /**
+     * Fog模块的注入点 - 修改雾颜色
+     * 使用TAIL注入，确保覆盖原版颜色设置
+     */
+    @Inject(method = "updateFogColor", at = @At("TAIL"))
+    private void injectFogColor(float partialTicks, CallbackInfo ci) {
+        Fog fogModule = Fog.INSTANCE;
+        
+        if (fogModule != null && fogModule.handleEvents()) {
+            // 获取雾颜色
+            int fogColor = fogModule.getFogColor();
+            float r = ((fogColor >> 16) & 0xFF) / 255.0f;
+            float g = ((fogColor >> 8) & 0xFF) / 255.0f;
+            float b = (fogColor & 0xFF) / 255.0f;
+            
+            // 设置颜色
+            GlStateManager.color(r, g, b, 1.0f);
+        }
     }
 }

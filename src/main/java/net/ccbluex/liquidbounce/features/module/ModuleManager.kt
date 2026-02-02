@@ -22,7 +22,6 @@ import net.ccbluex.liquidbounce.features.module.modules.render.*
 import net.ccbluex.liquidbounce.features.module.modules.world.*
 import net.ccbluex.liquidbounce.features.module.modules.skid.*
 import net.ccbluex.liquidbounce.features.module.modules.neko.*
-import net.ccbluex.liquidbounce.features.module.modules.neko.scaffolds.NekoScaffold
 import net.ccbluex.liquidbounce.features.module.modules.world.Timer
 import net.ccbluex.liquidbounce.features.module.modules.world.scaffolds.Scaffold
 import net.ccbluex.liquidbounce.features.module.modules.world.scaffolds.Scaffold2
@@ -41,6 +40,11 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
 
         // Register modules
         val modules = arrayOf(
+                ClientFixes,
+                AntiSoundCrash,
+                CSGOHUD,
+                HaloPlus,
+                ItemRotate,
                 GPUBurner,
                 Killaura5,
                 GrimFly,
@@ -111,7 +115,6 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
                 AttackSounds,
                 Aspect,
                 BAHalo,
-                NekoScaffold,
                 AutoL,
                 Gapple2,
                 DashTrail,

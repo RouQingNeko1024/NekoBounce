@@ -9,17 +9,11 @@ import net.ccbluex.liquidbounce.utils.client.chat
 import net.minecraft.network.play.client.*
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook
 import net.minecraft.item.ItemAppleGold
-import net.ccbluex.liquidbounce.ui.font.Fonts
-import net.ccbluex.liquidbounce.utils.render.RenderUtils.drawRoundedGradientRectCorner
-import net.ccbluex.liquidbounce.utils.render.RenderUtils.drawRoundedRect
-import net.minecraft.client.gui.ScaledResolution
-import java.awt.Color
 
 object Gapple2 : Module("Gapple2", Category.PLAYER) {
     private val c by int("C03PacketPlayer", 32, 32..40)
     private val triggerHealth by int("Health", 12, 1..18)
     private val autoEat by boolean("AutoGapple", true)
-    private val progressBar2 by boolean("ProgressBar2", true)
 
     private var x = 0.0
     private var y = 0.0
@@ -113,15 +107,6 @@ object Gapple2 : Module("Gapple2", Category.PLAYER) {
         }
     }
 
-    val onRender2D = handler<Render2DEvent> {
-        if (isEating && progressBar2) {
-            val scaledScreen = ScaledResolution(mc)
-            val width = scaledScreen.scaledWidth.toFloat()
-            val height = scaledScreen.scaledHeight.toFloat()
-            drawProgressBar(width, height)
-        }
-    }
-
     private fun stuck() {
         if (!r) {
             x = mc.thePlayer.motionX
@@ -187,19 +172,12 @@ object Gapple2 : Module("Gapple2", Category.PLAYER) {
         return shouldEat
     }
 
-    private fun drawProgressBar(width: Float, height: Float) {
-        val text = "Eating..."
-        val textWidth = Fonts.fontGoogleSans35.getStringWidth(text)
-        val textHeight = 10F
-        val progressLength = 140F
-        val startY = height / 4 * 3
-        val startX = width / 2 - progressLength / 2
-
-        val progressRatio = (ticks.toFloat() / c.toFloat()).coerceIn(0f, 1f)
-        val currentProgress = progressLength * progressRatio
-
-        Fonts.fontGoogleSans35.drawString(text, width / 2 - textWidth / 2, startY - textHeight-1f, Color(255, 255, 255, 255).rgb, true)
-        drawRoundedRect(startX, startY, startX + progressLength, startY + 7F, Color(0, 0, 0, 128).rgb, 2F)
-        if (currentProgress!= 0f) drawRoundedGradientRectCorner(startX, startY, startX + currentProgress, startY + 7F, 3f ,Color(76, 157, 240, 255).rgb,Color(53,200,167,255).rgb)
+    // 添加进度获取函数，供Island模块使用
+    fun getEatingProgress(): Float {
+        return if (isEating && state) {
+            (ticks.toFloat() / c.toFloat()).coerceIn(0f, 1f)
+        } else {
+            0f
+        }
     }
 }

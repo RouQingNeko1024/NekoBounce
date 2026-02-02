@@ -11,6 +11,7 @@ import net.ccbluex.liquidbounce.features.module.modules.render.Animation;
 import net.ccbluex.liquidbounce.features.module.modules.render.Animations;
 import net.ccbluex.liquidbounce.features.module.modules.render.AntiBlind;
 import net.ccbluex.liquidbounce.features.module.modules.render.SilentHotbarModule;
+import net.ccbluex.liquidbounce.features.module.modules.render.ItemRotate; // 添加这行
 import net.ccbluex.liquidbounce.utils.inventory.SilentHotbar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -32,7 +33,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject; // 添加这行
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo; // 添加这行
 
 import static net.minecraft.client.renderer.GlStateManager.*;
 
@@ -90,6 +93,7 @@ public abstract class MixinItemRenderer {
         final KillAura killAura = KillAura.INSTANCE;
         final NoSlow noSlow = NoSlow.INSTANCE;
         final Animations animations = Animations.INSTANCE;
+        final ItemRotate itemRotate = ItemRotate.INSTANCE; // 添加这行
 
         float f = 1f - (prevEquippedProgress + (equippedProgress - prevEquippedProgress) * partialTicks);
         EntityPlayerSP abstractclientplayer = mc.thePlayer;
@@ -159,6 +163,11 @@ public abstract class MixinItemRenderer {
                 }
 
                 transformFirstPersonItem(f, f1);
+                
+                // 在这里添加物品旋转注入点
+                if (itemRotate != null && itemRotate.shouldRotate()) {
+                    rotate(itemRotate.getRotation(), 0f, 1f, 0f);
+                }
             }
 
             renderItem(abstractclientplayer, itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
@@ -189,6 +198,4 @@ public abstract class MixinItemRenderer {
 
         return instance.getStackInSlot(slot);
     }
-
-
 }

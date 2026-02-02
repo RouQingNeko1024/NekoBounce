@@ -19,6 +19,7 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.hypixe
 import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.ncp.NCP
 import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.ncp.OldNCP
 import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.other.*
+import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.intave.IntaveFly
 import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.spartan.BugSpartan
 import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.spartan.Spartan
 import net.ccbluex.liquidbounce.features.module.modules.movement.flymodes.spartan.Spartan2
@@ -47,7 +48,7 @@ object Fly : Module("Fly", Category.MOVEMENT, Keyboard.KEY_F) {
         Vanilla, SmoothVanilla,
 
         // Matrix
-        Matrix,MatrixTest,
+        Matrix,MatrixTest,MatrixBoost,
 
         // NCP
         NCP, OldNCP,
@@ -175,6 +176,7 @@ object Fly : Module("Fly", Category.MOVEMENT, Keyboard.KEY_F) {
     val options = RotationSettings(this) { mode == "Fireball" }
 
     val autoJump by boolean("AutoJump", true) { mode == "Fireball" }
+
     val matrixPeriod by int("MatrixPeriod", 2, 1..20) { mode == "MatrixTest" }
     val matrixMotionY1 by float("MatrixMotionY1", -0.04f, -0.3f..0f) { mode == "MatrixTest" }
     val matrixMotionY2 by float("MatrixMotionY2", -0.04f, -0.3f..0f) { mode == "MatrixTest" }
@@ -184,8 +186,20 @@ object Fly : Module("Fly", Category.MOVEMENT, Keyboard.KEY_F) {
     val matrixOnlyOnDamage by boolean("MatrixOnlyOnDamage", true) { mode == "MatrixTest" }
     val matrixUseStuck by boolean("MatrixUseStuck", true) { mode == "MatrixTest" }
 
-    // Visuals
-    private val mark by boolean("Mark", true).subjective()
+    // Matrix
+    val bypassMode = choices("BypassMode", arrayOf("New", "Stable", "High", "Custom"), "New") { mode == "Matrix" }
+    val speed =
+        float("BoostSpeed", 2.0f, 1.0f..3.0f) { mode == "Matrix" }
+    val customYMotion = float("CustomJumpMotion", 0.6f, 0.2f..5f) { mode == "Matrix" && bypassMode.get() == "Custom" }
+    val jumpTimer =
+        float("JumpTimer", 0.1f, 0.1f..2f) { mode == "Matrix" }
+    val speedTimer =
+        float("BoostTimer", 1f, 0.5f..3f) { mode == "Matrix" }
+
+    // MatrixBoost
+    val jumpDamage = boolean("JumpDamage", false) {mode in arrayOf("MatrixBoost")}
+    val speedF = float("Matrix-Speed", 1.0f, 0.42f..7.0f) {mode in arrayOf("MatrixBoost")}
+    val height = float("Matrix-Height", 1.0f, 0.42f..7.0f) {mode in arrayOf("MatrixBoost")}
 
     var wasFired = false
     var firePosition: BlockPos? = null
@@ -195,8 +209,18 @@ object Fly : Module("Fly", Category.MOVEMENT, Keyboard.KEY_F) {
     var startY = 0.0
         private set
 
-    private val groundTimer = MSTimer()
-    private var wasFlying = false
+    var jumpCounter = 0
+    var receivedFlag = false
+    var canBoost1 = false
+    var lastMotionX = 0.0
+    var lastMotionY = 0.0
+    var lastMotionZ = 0.0
+
+    val groundTimer = MSTimer()
+    var wasFlying = false
+
+    // Visuals
+    private val mark by boolean("Mark", true).subjective()
 
     override fun onEnable() {
         val thePlayer = mc.thePlayer ?: return
@@ -287,7 +311,7 @@ object Fly : Module("Fly", Category.MOVEMENT, Keyboard.KEY_F) {
     }
 
     fun handleVanillaKickBypass() {
-        if (!vanillaKickBypass || !groundTimer.hasTimePassed(1000)) return
+        if (!vanillaKickBypass || !groundTimer.hasTimePassed(1000L)) return
         val ground = calculateGround() + 0.5
 
         var posY = mc.thePlayer.posY

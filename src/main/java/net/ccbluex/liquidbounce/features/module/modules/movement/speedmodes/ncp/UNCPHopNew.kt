@@ -45,7 +45,7 @@ object UNCPHopNew : SpeedMode("UNCPHopNew") {
         } else {
             if (player.hurtTime <= 1) {
                 airTick++
-                if (airTick == Speed.onTick) {
+                if (airTick == Speed.uncpOnTick) {
                     strafe()
                     player.motionY = -0.1523351824467155
                 }

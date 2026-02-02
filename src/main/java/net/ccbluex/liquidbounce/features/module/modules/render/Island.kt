@@ -57,7 +57,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 object Island : Module("Island", Category.RENDER) {
-    private val ClientName by text("ClientName", "Opai")
+    private val ClientName by text("ClientName", "Neko")
     private val animTension by float("BounceTension", 0.05f, 0.01f..1.0f)
     private val animFriction by float("BounceFriction", 0.3f, 0.01f..1.0f)
     private val styles = "New Opai"
@@ -85,6 +85,14 @@ object Island : Module("Island", Category.RENDER) {
     private val ScaffoldTheme by color("ScaffoldTheme", Color(65, 130, 225))
     private val maxBlocks by int("maxBlocks", 576, 64..576)
 
+    // Break Progress Settings
+    private val breakProgressCheck by boolean("BreakProgress", true)
+    private val breakProgressTheme by color("BreakProgressTheme", Color(225, 150, 65))
+    
+    // Gapple Progress Settings
+    private val showGappleProgress by boolean("GappleProgress", true)
+    private val gappleProgressTheme by color("GappleProgressTheme", Color(255, 215, 0))
+    
     // Chest Settings
     private val ChestTheme by boolean("Chest", true)
     private val ChestRounded by float("ChestRoundRadius", 4F, 0.0F..8.0F)
@@ -95,6 +103,18 @@ object Island : Module("Island", Category.RENDER) {
 
     private val bpsUpdateInterval by int("BPS-Update-Interval(ms)", 100, 50..500)
     private val versionNameDown = clientVersionText
+
+    // 方块挖掘进度相关变量
+    private var breakProgressTarget = 0F
+    private var animatedBreakProgress = 0F
+    private var animatedBreakProgressVelocity = 0F
+    private var lastBreakProgressUpdateTime: Long = 0L
+
+    // Gapple2进度相关变量
+    private var gappleProgressTarget = 0F
+    private var animatedGappleProgress = 0F
+    private var animatedGappleProgressVelocity = 0F
+    private var lastGappleProgressUpdateTime: Long = 0L
 
     // Globals (X, Y, W, H 全套动画变量)
     private var AnimGlobalX = 0F
@@ -190,6 +210,29 @@ object Island : Module("Island", Category.RENDER) {
         prevX = mc.thePlayer.posX
         prevZ = mc.thePlayer.posZ
 
+        // 更新方块挖掘进度
+        if (mc.playerController != null && mc.thePlayer != null) {
+            val currentBreakProgress = mc.playerController.curBlockDamageMP
+            if (System.currentTimeMillis() - lastBreakProgressUpdateTime >= 50) {
+                breakProgressTarget = currentBreakProgress
+                lastBreakProgressUpdateTime = System.currentTimeMillis()
+            }
+        } else {
+            breakProgressTarget = 0F
+        }
+
+        // 更新Gapple2进度
+        val gappleModule = ModuleManager.getModule("Gapple2")
+        if (gappleModule != null && gappleModule.state) {
+            val currentProgress = getGappleEatingProgress()
+            if (System.currentTimeMillis() - lastGappleProgressUpdateTime >= 50) {
+                gappleProgressTarget = currentProgress
+                lastGappleProgressUpdateTime = System.currentTimeMillis()
+            }
+        } else {
+            gappleProgressTarget = 0F
+        }
+
         if (ModuleNotify) {
             for (module in ModuleManager) {
                 if (!prevModuleStates.containsKey(module)) {
@@ -209,6 +252,32 @@ object Island : Module("Island", Category.RENDER) {
                     showToggleNotification(titleText, message, currentState, module.name)
                 }
             }
+        }
+    }
+
+    private fun getGappleEatingProgress(): Float {
+        val gappleModule = ModuleManager.getModule("Gapple2") ?: return 0f
+        if (!gappleModule.state) return 0f
+        
+        try {
+            // 使用反射获取Gapple2模块的进度
+            val field = gappleModule::class.java.getDeclaredField("isEating")
+            field.isAccessible = true
+            val isEating = field.getBoolean(gappleModule)
+            
+            if (!isEating) return 0f
+            
+            val ticksField = gappleModule::class.java.getDeclaredField("ticks")
+            ticksField.isAccessible = true
+            val ticks = ticksField.getInt(gappleModule)
+            
+            val cField = gappleModule::class.java.getDeclaredField("c")
+            cField.isAccessible = true
+            val c = cField.get(gappleModule) as Int
+            
+            return (ticks.toFloat() / c.toFloat()).coerceIn(0f, 1f)
+        } catch (e: Exception) {
+            return 0f
         }
     }
 
@@ -265,6 +334,16 @@ object Island : Module("Island", Category.RENDER) {
                 .sortedWith(compareBy({ it.gameProfile.name }))
         } else emptyList()
 
+        // 更新方块挖掘进度动画
+        val (nextBreakProgress, vBreakProgress) = spring(animatedBreakProgress, breakProgressTarget, animatedBreakProgressVelocity)
+        animatedBreakProgress = nextBreakProgress.coerceIn(0F, 1F)
+        animatedBreakProgressVelocity = vBreakProgress
+
+        // 更新Gapple2进度动画
+        val (nextGappleProgress, vGappleProgress) = spring(animatedGappleProgress, gappleProgressTarget, animatedGappleProgressVelocity)
+        animatedGappleProgress = nextGappleProgress.coerceIn(0F, 1F)
+        animatedGappleProgressVelocity = vGappleProgress
+
         var targetWidth = 0F
         var targetHeight = 0F
         var targetX = 0F
@@ -305,7 +384,7 @@ object Island : Module("Island", Category.RENDER) {
             val spacing = 4F
             var maxNameWidth = 50F
 
-            playerList.forEach {
+            playerList.forEach { it ->
                 val fullName = mc.ingameGUI.tabList.getPlayerName(it)
                 val w = Fonts.fontRegular35.getStringWidth(fullName).toFloat()
                 if (w > maxNameWidth) maxNameWidth = w
@@ -349,6 +428,18 @@ object Island : Module("Island", Category.RENDER) {
             targetWidth = borderInfo.coerceAtLeast(180F)
             targetHeight = (notifications.size * ITEM_NOTIFY_HEIGHT).toFloat()
             targetX = (width - targetWidth) / 2
+        } else if (breakProgressCheck && animatedBreakProgress > 0.01f) {
+            renderMode = "BREAK_PROGRESS"
+            targetWidth = 190F
+            targetHeight = 58F
+            targetX = (width - targetWidth) / 2
+            targetY = start_y
+        } else if (showGappleProgress && animatedGappleProgress > 0.01f && ModuleManager.getModule("Gapple2")?.state == true) {
+            renderMode = "GAPPLE_PROGRESS"
+            targetWidth = 190F
+            targetHeight = 58F
+            targetX = (width - targetWidth) / 2
+            targetY = start_y
         } else {
             when (styles) {
                 "New Opai" -> {
@@ -432,6 +523,8 @@ object Island : Module("Island", Category.RENDER) {
                 "NORMAL_OPAI" -> renderNormal3Content(drawX, drawY, drawW, drawH)
                 "CHEST" -> renderChestContent(drawX, drawY, drawW, drawH, chestSlots)
                 "TABLIST" -> renderTabListContent(drawX, drawY, drawW, drawH, playerList, headerLines, footerLines)
+                "BREAK_PROGRESS" -> renderBreakProgressContent(drawX, drawY, drawW, drawH)
+                "GAPPLE_PROGRESS" -> renderGappleProgressContent(drawX, drawY, drawW, drawH)
             }
         }
 
@@ -442,7 +535,71 @@ object Island : Module("Island", Category.RENDER) {
         glPopMatrix()
     }
 
-    // --- Renderers ---
+    // --- 新增：Gapple2进度绘制函数 ---
+    private fun renderGappleProgressContent(x: Float, y: Float, w: Float, h: Float) {
+        val percentage = animatedGappleProgress.coerceIn(0f, 1f)
+        val padding = 8F
+        val cornerRadius = 6F
+        val iconSize = 32F
+        val iconBgX = x + padding
+        val iconBgY = y + padding
+        val themeColor = Color(gappleProgressTheme.red, gappleProgressTheme.green, gappleProgressTheme.blue, 200)
+        drawRoundedRect(iconBgX, iconBgY, iconBgX + iconSize, iconBgY + iconSize, themeColor.rgb, cornerRadius - 1)
+        
+        // 尝试绘制苹果图标
+        try {
+            val appleImgSize = 24
+            drawImage(ResourceLocation("liquidbounce/watermark_images/apple.png"), 
+                    (iconBgX + (iconSize - appleImgSize) / 2).toInt(), 
+                    (iconBgY + (iconSize - appleImgSize) / 2 + 1).toInt(), 
+                    appleImgSize, appleImgSize, Color.WHITE)
+        } catch (e: Exception) {
+            // 如果图标不存在，绘制文字"EAT"
+            Fonts.fontGoogleSans40.drawCenteredString("EAT", iconBgX + iconSize / 2, iconBgY + iconSize / 2 - 8, Color.WHITE.rgb)
+        }
+
+        val textX = iconBgX + iconSize + 8F
+        val titleY = y + padding + 2F
+        Fonts.fontGoogleSans40.drawString("Eating Gapple", textX, titleY, Color.WHITE.rgb)
+        val percentText = String.format("%.1f", percentage * 100) + "%"
+        Fonts.fontRegular40.drawString(percentText, textX, titleY + Fonts.fontGoogleSans45.FONT_HEIGHT + 2F, Color(200, 200, 200).rgb)
+
+        val barHeight = 8F
+        val barY = y + h - barHeight - padding
+        val maxBarWidth = w - (padding * 2)
+        val currentBarWidth = maxBarWidth * percentage
+        drawRoundedRect(x + padding, barY, x + padding + maxBarWidth, barY + barHeight, Color(60, 60, 70, 180).rgb, 3F)
+        val lighter = Color(gappleProgressTheme.red, gappleProgressTheme.green, gappleProgressTheme.blue, 255)
+        drawRoundedRect(x + padding, barY, x + padding + currentBarWidth, barY + barHeight, lighter.rgb, 3F)
+    }
+
+    // --- 方块挖掘进度绘制函数 ---
+    private fun renderBreakProgressContent(x: Float, y: Float, w: Float, h: Float) {
+        val percentage = animatedBreakProgress.coerceIn(0f, 1f)
+        val padding = 8F
+        val cornerRadius = 6F
+        val iconSize = 32F
+        val iconBgX = x + padding
+        val iconBgY = y + padding
+        val themeColor = Color(breakProgressTheme.red, breakProgressTheme.green, breakProgressTheme.blue, 200)
+        drawRoundedRect(iconBgX, iconBgY, iconBgX + iconSize, iconBgY + iconSize, themeColor.rgb, cornerRadius - 1)
+        val bedImgSize = 24
+        drawImage(ResourceLocation("liquidbounce/watermark_images/bed.png"), (iconBgX + (iconSize - bedImgSize) / 2).toInt(), (iconBgY + (iconSize - bedImgSize) / 2 + 1).toInt(), bedImgSize, bedImgSize, Color.WHITE)
+
+        val textX = iconBgX + iconSize + 8F
+        val titleY = y + padding + 2F
+        Fonts.fontGoogleSans40.drawString("Break Progress", textX, titleY, Color.WHITE.rgb)
+        val percentText = String.format("%.1f", percentage * 100) + "%"
+        Fonts.fontRegular40.drawString(percentText, textX, titleY + Fonts.fontGoogleSans45.FONT_HEIGHT + 2F, Color(200, 200, 200).rgb)
+
+        val barHeight = 8F
+        val barY = y + h - barHeight - padding
+        val maxBarWidth = w - (padding * 2)
+        val currentBarWidth = maxBarWidth * percentage
+        drawRoundedRect(x + padding, barY, x + padding + maxBarWidth, barY + barHeight, Color(60, 60, 70, 180).rgb, 3F)
+        val lighter = Color(breakProgressTheme.red, breakProgressTheme.green, breakProgressTheme.blue, 255)
+        drawRoundedRect(x + padding, barY, x + padding + currentBarWidth, barY + barHeight, lighter.rgb, 3F)
+    }
 
     // 绘制圆形工具函数
     private fun drawCircle(x: Float, y: Float, radius: Float, color: Color) {
@@ -798,6 +955,7 @@ object Island : Module("Island", Category.RENDER) {
     }
 
     private fun drawNormal2() {}
+    
     private fun drawCenteredDot(x: Float, textBaseY: Float) {
         val dotY = textBaseY - Fonts.fontGoogleSans40.FONT_HEIGHT / 2 + 3F
         Fonts.fontGoogleSans40.drawString("·", x - 3f, dotY, Color(180, 180, 180, 255).rgb)

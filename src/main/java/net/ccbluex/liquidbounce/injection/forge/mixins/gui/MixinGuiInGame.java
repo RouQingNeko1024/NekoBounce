@@ -8,6 +8,7 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 import net.ccbluex.liquidbounce.event.EventManager;
 import net.ccbluex.liquidbounce.event.Render2DEvent;
 import net.ccbluex.liquidbounce.features.module.modules.render.AntiBlind;
+import net.ccbluex.liquidbounce.features.module.modules.render.CSGOHUD;
 import net.ccbluex.liquidbounce.features.module.modules.render.HUD;
 import net.ccbluex.liquidbounce.features.module.modules.render.SilentHotbarModule;
 import net.ccbluex.liquidbounce.ui.font.AWTFontRenderer;
@@ -54,6 +55,24 @@ public abstract class MixinGuiInGame extends Gui {
     @Final
     protected Minecraft mc;
 
+    // CSGOHUD specific injections - 简化的方法，只取消主要的HUD渲染
+    @Inject(
+        method = "renderGameOverlay",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    private void onRenderGameOverlay(float partialTicks, CallbackInfo callbackInfo) {
+        if (CSGOHUD.isCSGOHUDEnabled() && CSGOHUD.shouldHideVanillaHUD()) {
+            // 跳过渲染原版HUD，但保留聊天等必要元素
+            // 我们只渲染自定义的CSGOHUD，原版HUD完全跳过
+            callbackInfo.cancel();
+            
+            // 调用Render2DEvent，让CSGOHUD渲染
+            liquidBounce$injectRender2DEvent(partialTicks);
+        }
+    }
+
+    // 现有的其他方法保持不变...
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(CallbackInfo callbackInfo) {
         if (HUD.INSTANCE.handleEvents())
@@ -187,10 +206,16 @@ public abstract class MixinGuiInGame extends Gui {
             }
         }
 
-        liquidBounce$injectRender2DEvent(delta);
+        if (!CSGOHUD.isCSGOHUDEnabled() || !CSGOHUD.shouldHideVanillaHUD()) {
+            liquidBounce$injectRender2DEvent(delta);
+        }
     }
 
-    @Inject(method = "renderPumpkinOverlay", at = @At("HEAD"), cancellable = true)
+    @Inject(
+        method = "renderPumpkinOverlay",
+        at = @At("HEAD"),
+        cancellable = true
+    )
     private void renderPumpkinOverlay(final CallbackInfo callbackInfo) {
         final AntiBlind antiBlind = AntiBlind.INSTANCE;
 
@@ -198,7 +223,11 @@ public abstract class MixinGuiInGame extends Gui {
             callbackInfo.cancel();
     }
 
-    @Inject(method = "renderBossHealth", at = @At("HEAD"), cancellable = true)
+    @Inject(
+        method = "renderBossHealth",
+        at = @At("HEAD"),
+        cancellable = true
+    )
     private void renderBossHealth(CallbackInfo callbackInfo) {
         final AntiBlind antiBlind = AntiBlind.INSTANCE;
 

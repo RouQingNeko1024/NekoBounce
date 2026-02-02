@@ -109,8 +109,10 @@ object MovementUtils : MinecraftInstance {
     fun getSpeedAmplifier(): Int {
         return if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) 1 + mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier else 0
     }
+    
+    // 使用新的 isMoving 函数
     fun isMoving(): Boolean {
-        return mc.thePlayer != null && (mc.thePlayer.movementInput.moveForward != 0f || mc.thePlayer.movementInput.moveStrafe != 0f)
+        return net.ccbluex.liquidbounce.utils.movement.MovementUtils.isMoving()
     }
 
     fun isStrafing(): Boolean {
@@ -126,6 +128,7 @@ object MovementUtils : MinecraftInstance {
         mc.thePlayer.motionX = -sin(net.ccbluex.liquidbounce.utils.movement.MovementUtils.direction) * speed
         mc.thePlayer.motionZ = cos(net.ccbluex.liquidbounce.utils.movement.MovementUtils.direction) * speed
     }
+    
     fun strafe(event: MoveEvent, speed: Float) {
         if (!net.ccbluex.liquidbounce.utils.movement.MovementUtils.isMoving()) return
        event.x = -sin(net.ccbluex.liquidbounce.utils.movement.MovementUtils.direction) * speed
@@ -147,6 +150,7 @@ object MovementUtils : MinecraftInstance {
         }
         return baseSpeed
     }
+    
     fun getSpeed(e: EntityLivingBase): Float {
         return sqrt((e.posX - e.prevPosX) * (e.posX - e.prevPosX) + (e.posZ - e.prevPosZ) * (e.posZ - e.prevPosZ))
             .toFloat()
@@ -429,6 +433,7 @@ object MovementUtils : MinecraftInstance {
         }
         return false
     }
+    
     fun setMotion2(d: Double, f: Float) {
         mc.thePlayer.motionX = -sin(Math.toRadians(f.toDouble())) * d
         mc.thePlayer.motionZ = cos(Math.toRadians(f.toDouble())) * d
