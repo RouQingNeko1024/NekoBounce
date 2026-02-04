@@ -51,8 +51,8 @@ import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.max
 import kotlin.math.ceil
-import kotlin.math.pow
 import kotlin.math.sqrt
+import kotlin.math.pow
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -221,7 +221,7 @@ object Island : Module("Island", Category.RENDER) {
             breakProgressTarget = 0F
         }
 
-        // 更新Gapple2进度
+        // 更新Gapple2进度 - 使用修复后的函数
         val gappleModule = ModuleManager.getModule("Gapple2")
         if (gappleModule != null && gappleModule.state) {
             val currentProgress = getGappleEatingProgress()
@@ -255,29 +255,49 @@ object Island : Module("Island", Category.RENDER) {
         }
     }
 
+    // 修复：Gapple2进度获取函数 - 不再使用反射访问私有字段
     private fun getGappleEatingProgress(): Float {
         val gappleModule = ModuleManager.getModule("Gapple2") ?: return 0f
         if (!gappleModule.state) return 0f
         
-        try {
-            // 使用反射获取Gapple2模块的进度
-            val field = gappleModule::class.java.getDeclaredField("isEating")
-            field.isAccessible = true
-            val isEating = field.getBoolean(gappleModule)
-            
-            if (!isEating) return 0f
-            
-            val ticksField = gappleModule::class.java.getDeclaredField("ticks")
-            ticksField.isAccessible = true
-            val ticks = ticksField.getInt(gappleModule)
-            
-            val cField = gappleModule::class.java.getDeclaredField("c")
-            cField.isAccessible = true
-            val c = cField.get(gappleModule) as Int
-            
-            return (ticks.toFloat() / c.toFloat()).coerceIn(0f, 1f)
+        // 尝试直接调用Gapple2模块的公共方法
+        return try {
+            // 方法1：使用类型安全转换和公共方法
+            val gapple2Class = Class.forName("net.ccbluex.liquidbounce.features.module.modules.player.Gapple2")
+            val getProgressMethod = gapple2Class.getDeclaredMethod("getEatingProgress")
+            getProgressMethod.isAccessible = true
+            val progress = getProgressMethod.invoke(gappleModule)
+            progress as? Float ?: 0f
+        } catch (e: ClassNotFoundException) {
+            // 方法2：尝试直接调用（如果Gapple2类在同一个包中）
+            try {
+                val getProgressMethod = gappleModule::class.java.getDeclaredMethod("getEatingProgress")
+                getProgressMethod.isAccessible = true
+                (getProgressMethod.invoke(gappleModule) as? Float) ?: 0f
+            } catch (e2: Exception) {
+                // 方法3：使用反射访问字段（备用方案）
+                try {
+                    val isEatingField = gappleModule::class.java.getDeclaredField("isEating")
+                    isEatingField.isAccessible = true
+                    val isEating = isEatingField.getBoolean(gappleModule)
+                    
+                    if (!isEating) return 0f
+                    
+                    val ticksField = gappleModule::class.java.getDeclaredField("ticks")
+                    ticksField.isAccessible = true
+                    val ticks = ticksField.getInt(gappleModule)
+                    
+                    val cField = gappleModule::class.java.getDeclaredField("c")
+                    cField.isAccessible = true
+                    val c = cField.get(gappleModule) as Int
+                    
+                    (ticks.toFloat() / c.toFloat()).coerceIn(0f, 1f)
+                } catch (e3: Exception) {
+                    0f
+                }
+            }
         } catch (e: Exception) {
-            return 0f
+            0f
         }
     }
 
@@ -723,7 +743,7 @@ object Island : Module("Island", Category.RENDER) {
 
         if (players.isNotEmpty()) {
             var maxNameWidth = 50F
-            players.forEach {
+            players.forEach { it ->
                 val fullName = mc.ingameGUI.tabList.getPlayerName(it)
                 val wName = Fonts.fontRegular35.getStringWidth(fullName).toFloat()
                 if (wName > maxNameWidth) maxNameWidth = wName

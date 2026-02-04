@@ -13,6 +13,7 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.aac.
 import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.aac.LAAC
 import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.intave.IntaveNew
 import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.intave.IntaveOld
+import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.intave.Intave14
 import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.other.None
 import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.other.Matrix
 import net.ccbluex.liquidbounce.features.module.modules.movement.nowebmodes.other.Matrix2
@@ -29,7 +30,7 @@ object NoWeb : Module("NoWeb", Category.MOVEMENT) {
         AAC, LAAC,
 
         // Intave
-        IntaveOld,
+        IntaveOld,Intave14,
         IntaveNew,
 
         // Other

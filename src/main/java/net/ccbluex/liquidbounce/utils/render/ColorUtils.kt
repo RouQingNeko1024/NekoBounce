@@ -1,20 +1,19 @@
 /*
- * LiquidBounce Hacked Client
+ * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/CCBlueX/LiquidBounce/
+ * https://github.com/SkidderMC/FDPClient/
  */
 package net.ccbluex.liquidbounce.utils.render
 
 import net.ccbluex.liquidbounce.utils.attack.EntityUtils.getHealth
 import net.ccbluex.liquidbounce.utils.kotlin.RandomUtils.nextInt
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.GlStateManager.color
 import net.minecraft.entity.EntityLivingBase
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.regex.Pattern
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
+import kotlin.math.*
 
 object ColorUtils {
     /** Array of the special characters that are allowed in any text drawing of Minecraft.  */
@@ -29,7 +28,7 @@ object ColorUtils {
         return regex.matches(input)
     }
 
-    private val COLOR_PATTERN = Pattern.compile("(?i)§[0-9A-FK-OR]")
+    val COLOR_PATTERN = Pattern.compile("(?i)§[0-9A-FK-OR]")
 
     val hexColors = IntArray(16) { i ->
         val baseColor = (i shr 3 and 1) * 85
@@ -44,13 +43,11 @@ object ColorUtils {
     val minecraftRed = Color(255, 85, 85) // §c
 
     fun Color.withAlpha(a: Int) = Color(red, green, blue, a)
-
     fun Color.normalize() = Color(this.red / 255f, this.green / 255f, this.blue / 255f, this.alpha / 255f)
 
     fun packARGBValue(r: Int, g: Int, b: Int, a: Int = 0xff): Int {
         return (a and 255 shl 24) or (r and 255 shl 16) or (g and 255 shl 8) or (b and 255)
     }
-
     fun unpackARGBValue(argb: Int): IntArray {
         return intArrayOf(
             argb ushr 24 and 0xFF,
@@ -114,6 +111,30 @@ object ColorUtils {
         }
     }
 
+    fun rainbow(): Color {
+        val currentColor = Color(Color.HSBtoRGB((System.nanoTime() + 400000L) / 10000000000F % 1, 1F, 1F))
+        return Color(
+            currentColor.red / 255F * 1F,
+            currentColor.green / 255f * 1F,
+            currentColor.blue / 255F * 1F,
+            currentColor.alpha / 255F
+        )
+    }
+
+    fun rainbow(offset: Long): Color {
+        val currentColor = Color(Color.HSBtoRGB((System.nanoTime() + offset) / 10000000000F % 1, 1F, 1F))
+        return Color(
+            currentColor.red / 255F * 1F, currentColor.green / 255F * 1F, currentColor.blue / 255F * 1F,
+            currentColor.alpha / 255F
+        )
+    }
+
+    fun rainbow(alpha: Float) = rainbow(400000L, alpha)
+
+    fun rainbow(alpha: Int) = rainbow(400000L, alpha / 255)
+
+    fun rainbow(offset: Long, alpha: Int) = rainbow(offset, alpha.toFloat() / 255)
+
     fun blendColors(color: Color, color2: Color): Color {
         val alpha = color2.alpha / 255.0
         val red = (color2.red * alpha + color.red * (1 - alpha)).toInt()
@@ -122,32 +143,7 @@ object ColorUtils {
         return Color(red, green, blue)
     }
 
-    /**
-     * 修改后的rainbow函数：当NekoRainbowControl模块启用时，使用模块的rainbow函数
-     * 否则使用原版彩虹色
-     */
     fun rainbow(offset: Long = 400000L, alpha: Float = 1f): Color {
-        try {
-            // 获取模块管理器
-            val moduleManager = LiquidBounce.moduleManager
-            if (moduleManager != null) {
-                // 查找NekoRainbowControl模块
-                val nekoRainbowModule = moduleManager.getModule("NekoRainbowControl")
-                if (nekoRainbowModule != null && nekoRainbowModule.state) {
-                    // 模块启用，调用模块的rainbow方法
-                    // 使用Kotlin的as?安全转换
-                    val module = nekoRainbowModule as? net.ccbluex.liquidbounce.features.module.modules.render.NekoRainbowControl
-                    if (module != null) {
-                        return module.rainbow(offset, alpha)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            // 如果出现异常，则使用原版彩虹色
-            // 可以在这里添加调试信息，如果需要的话
-        }
-        
-        // 原版彩虹色实现
         val currentColor = Color(Color.HSBtoRGB((System.nanoTime() + offset) / 10000000000F % 1, 1F, 1F))
         return Color(currentColor.red / 255F, currentColor.green / 255F, currentColor.blue / 255F, alpha)
     }
@@ -177,30 +173,29 @@ object ColorUtils {
         return Color.getHSBColor(hue, saturation, brightness)
     }
 
-    fun interpolateHealthColor(
-        entity: EntityLivingBase,
-        r: Int,
-        g: Int,
-        b: Int,
-        a: Int,
-        healthFromScoreboard: Boolean,
-        absorption: Boolean
-    ): Color {
-        val entityHealth = getHealth(entity, healthFromScoreboard, absorption)
-        val healthRatio = (entityHealth / entity.maxHealth).coerceIn(0F, 1F)
-        val red = (r * (1 - healthRatio)).toInt()
-        val green = (g * healthRatio).toInt()
+    fun getGradientOffset(c1: Color, c2: Color, offsetIn: Double): Color {
+        var offset = offsetIn
+        if (offset > 1.0) {
+            val left = offset % 1.0
+            val off = offset.toInt()
+            offset = if (off % 2 == 0) left else 1.0 - left
+        }
+        val inv = 1.0 - offset
 
-        return Color(red, green, b, a)
+        fun mix(a: Int, b: Int) =
+            (a * inv + b * offset).toInt().coerceIn(0, 255)
+
+        val r = mix(c1.red,   c2.red)
+        val g = mix(c1.green, c2.green)
+        val b = mix(c1.blue,  c2.blue)
+        val a = mix(c1.alpha, c2.alpha)
+
+        return Color(r, g, b, a)
     }
 
-    /**
-     * @author Ell1ott
-     */
     fun shiftHue(color: Color, shift: Int): Color {
         val hsb = Color.RGBtoHSB(color.red, color.green, color.blue, null)
         val shiftedColor = Color(Color.HSBtoRGB((hsb[0] + shift.toFloat() / 360) % 1F, hsb[1], hsb[2]))
-
         return Color(shiftedColor.red, shiftedColor.green, shiftedColor.blue, color.alpha)
     }
 
@@ -219,7 +214,138 @@ object ColorUtils {
         hsb[2] = brightness % 2.0f
         return Color(Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]))
     }
-    //
+
+
+    fun fade(colorSettings: ColorSettingsInteger, speed: Int, index: Int, color: Color, alpha: Float): Color {
+        val hsb = Color.RGBtoHSB(color.red, color.green, color.blue, null)
+        var angle = ((System.currentTimeMillis() / speed + index) % 360L).toInt()
+        angle = (if (angle > 180) 360 - angle else angle) + 180
+        val colorHSB = Color(Color.HSBtoRGB(hsb[0], hsb[1], angle / 360.0f))
+        return Color(colorHSB.red, colorHSB.green, colorHSB.blue, (max(0.0, min(255.0, (alpha * 255.0f).toDouble()))).toInt())
+    }
+
+    fun setColor(color: Int) {
+        setColorAlpha(color)
+    }
+
+    private fun setColorAlpha(color: Int) {
+        val alpha = (color shr 24 and 255) / 255f
+        val red = (color shr 16 and 255) / 255f
+        val green = (color shr 8 and 255) / 255f
+        val blue = (color and 255) / 255f
+        GlStateManager.color(red, green, blue, alpha)
+    }
+
+    fun clearColor() {
+        GlStateManager.color(1f, 1f, 1f, 1f)
+    }
+
+    fun getCustomColor(red: Int, green: Int, blue: Int, alpha: Int): Int {
+        var color = 0
+        color = color or (alpha shl 24)
+        color = color or (red shl 16)
+        color = color or (green shl 8)
+        return blue.let { color = color or it; color }
+    }
+
+    fun swapAlpha(color: Int, alpha: Float): Int {
+        val f = color shr 16 and 0xFF
+        val f1 = color shr 8 and 0xFF
+        val f2 = color and 0xFF
+        return getCustomColor(f, f1, f2, alpha.toInt())
+    }
+
+    fun reAlpha(color: Int, alpha: Float): Color {
+        val c = Color(color)
+        val r = 0.003921569f * c.red.toFloat()
+        val g = 0.003921569f * c.green.toFloat()
+        val b = 0.003921569f * c.blue.toFloat()
+        return (Color(r, g, b, alpha))
+    }
+
+    fun targetReAlpha(color: Color, alpha: Float): Color {
+        return Color(color.red / 255f, color.green / 255f, color.blue / 255f, alpha)
+    }
+
+    @JvmStatic
+    fun inAlpha(color: Color, alpha: Int): Color = Color(color.red, color.green, color.blue, alpha.coerceIn(0, 255))
+
+    @JvmStatic
+    fun getOppositeColor(color: Color): Color = Color(255 - color.red, 255 - color.green, 255 - color.blue, color.alpha)
+
+    fun rainbowEffect(offset: Long, saturation: Float, fade: Float): Color {
+        val hue = (System.nanoTime() + offset).toFloat() / 1.0E10f % 1.0f
+        val color = Integer.toHexString(Color.HSBtoRGB(hue, saturation, 1.0f)).toLong(16)
+        val c = Color(color.toInt())
+        return Color(c.red / 255.0f * fade, c.green / 255.0f * fade, c.blue / 255.0f * fade, c.alpha / 255.0f)
+    }
+
+    fun mixColors(color1: Color, color2: Color, ms: Double, offset: Int): Color {
+        val timer = (System.currentTimeMillis() / 1E+8 * ms) * 4E+5
+        val percent =  (sin(timer + offset * 0.55f) + 1) * 0.5f
+        val inverse_percent = 1.0 - percent
+        val redPart = (color1.red * percent + color2.red * inverse_percent).toInt()
+        val greenPart = (color1.green * percent + color2.green * inverse_percent).toInt()
+        val bluePart = (color1.blue * percent + color2.blue * inverse_percent).toInt()
+        return Color(redPart, greenPart, bluePart)
+    }
+
+    fun mixColors(color1: Color, color2: Color, percent: Float): Color {
+        return Color(color1.red + ((color2.red - color1.red) * percent).toInt(), color1.green + ((color2.green - color1.green) * percent).toInt(), color1.blue + ((color2.blue - color1.blue) * percent).toInt(), color1.alpha + ((color2.alpha - color1.alpha) * percent).toInt())
+    }
+
+    fun skyRainbow(var2: Int, st: Float, bright: Float, speed: Float): Color {
+        var v1 = ceil((System.currentTimeMillis() + (var2 * 109 * speed).toLong()).toDouble()) / 5
+        return Color.getHSBColor(
+            if ((((360.0.also { v1 %= it }) / 360.0).toFloat()) < 0.5) -((v1 / 360.0).toFloat()) else (v1 / 360.0).toFloat(),
+            st,
+            bright
+        )
+    }
+
+    fun getHealthColor(health: Float?, maxHealth: Float?): Color {
+        val safeHealth = health ?: 0.0f
+        val safeMaxHealth = maxHealth ?: 1.0f
+        val progress = (safeHealth / safeMaxHealth).coerceIn(0.0f, 1.0f)
+        val fractions = floatArrayOf(0.0f, 0.5f, 1.0f)
+        val colors = arrayOf(Color(108, 0, 0), Color(255, 51, 0), Color.GREEN)
+        return blendColors(fractions, colors, progress).brighter()
+    }
+
+    fun blendColors(fractions: FloatArray, colors: Array<Color>, progress: Float): Color {
+        if (fractions.size != colors.size) {
+            throw IllegalArgumentException("Fractions and colors must have equal number of elements")
+        }
+
+        val indices = getFractionIndices(fractions, progress)
+        val range = floatArrayOf(fractions[indices[0]], fractions[indices[1]])
+        val colorRange = arrayOf(colors[indices[0]], colors[indices[1]])
+
+        val max = range[1] - range[0]
+        val value = progress - range[0]
+        val weight = value / max
+
+        return blend(colorRange[0], colorRange[1], (1.0f - weight).toDouble())
+    }
+
+    fun getFractionIndices(fractions: FloatArray, progress: Float): IntArray {
+        val range = IntArray(2)
+
+        var startPoint: Int
+        startPoint = 0
+        while (startPoint < fractions.size && fractions[startPoint] <= progress) {
+            ++startPoint
+        }
+
+        if (startPoint >= fractions.size) {
+            startPoint = fractions.size - 1
+        }
+
+        range[0] = startPoint - 1
+        range[1] = startPoint
+        return range
+    }
+
     fun applyOpacity(color: Int, opacity: Float): Int {
         val old = Color(color)
         return applyOpacity(old, opacity).rgb
@@ -230,6 +356,7 @@ object ColorUtils {
         opacity = min(1.0, max(0.0, opacity.toDouble())).toFloat()
         return Color(color.red, color.green, color.blue, (color.alpha * opacity).toInt())
     }
+
     fun darker(color: Int, factor: Float): Int {
         val r = ((color shr 16 and 0xFF) * factor).toInt()
         val g = ((color shr 8 and 0xFF) * factor).toInt()
@@ -241,12 +368,137 @@ object ColorUtils {
     fun getAlphaFromColor(color: Int): Int {
         return color shr 24 and 0xFF
     }
-    @JvmStatic
+
+    fun glFloatColor(color: Color, alpha: Int) {
+        glFloatColor(color, alpha / 255f)
+    }
+
+    fun glFloatColor(color: Color, alpha: Float) {
+        val red = color.red / 255f
+        val green = color.green / 255f
+        val blue = color.blue / 255f
+
+        color(red, green, blue, alpha)
+    }
+
+    fun getMainColor(level: Int): Int {
+        if (level == 4) return -0x560000
+        return -1
+    }
+
+    fun interpolateColor(color1: Int, color2: Int, amount: Float): Int {
+        var amount = amount
+        amount = min(1.0, max(0.0, amount.toDouble())).toFloat()
+        val cColor1 = Color(color1)
+        val cColor2 = Color(color2)
+        return interpolateColorC(cColor1, cColor2, amount).getRGB()
+    }
+
+    fun interpolateColorC(color1: Color, color2: Color, amount: Float): Color {
+        var amount = amount
+        amount = min(1.0, max(0.0, amount.toDouble())).toFloat()
+        return Color(
+            interpolateInt(color1.red, color2.red, amount.toDouble()),
+            interpolateInt(color1.green, color2.green, amount.toDouble()),
+            interpolateInt(color1.blue, color2.blue, amount.toDouble()),
+            interpolateInt(color1.alpha, color2.alpha, amount.toDouble())
+        )
+    }
+
+    fun interpolateInt(oldValue: Int, newValue: Int, interpolationValue: Double): Int {
+        return interpolate(oldValue.toDouble(), newValue.toDouble(), interpolationValue.toFloat().toDouble())
+            .toInt()
+    }
+
+    fun interpolate(oldValue: Double, newValue: Double, interpolationValue: Double): Double {
+        return (oldValue + (newValue - oldValue) * interpolationValue)
+    }
+
+    fun blend(color1: Color, color2: Color, ratio: Double): Color {
+        val r = ratio.toFloat()
+        val ir = 1.0f - r
+        val rgb1 = color1.getColorComponents(FloatArray(3))
+        val rgb2 = color2.getColorComponents(FloatArray(3))
+        var red = rgb1[0] * r + rgb2[0] * ir
+        var green = rgb1[1] * r + rgb2[1] * ir
+        var blue = rgb1[2] * r + rgb2[2] * ir
+        if (red < 0.0f) {
+            red = 0.0f
+        } else if (red > 255.0f) {
+            red = 255.0f
+        }
+
+        if (green < 0.0f) {
+            green = 0.0f
+        } else if (green > 255.0f) {
+            green = 255.0f
+        }
+
+        if (blue < 0.0f) {
+            blue = 0.0f
+        } else if (blue > 255.0f) {
+            blue = 255.0f
+        }
+
+        var color3: Color? = null
+
+        try {
+            color3 = Color(red, green, blue)
+        } catch (ignored: java.lang.IllegalArgumentException) {
+        }
+
+        return color3!!
+    }
+
     fun setColour(colour: Int) {
         val a = (colour shr 24 and 0xFF) / 255.0f
         val r = (colour shr 16 and 0xFF) / 255.0f
         val g = (colour shr 8 and 0xFF) / 255.0f
         val b = (colour and 0xFF) / 255.0f
         GL11.glColor4f(r, g, b, a)
+    }
+
+    enum class potionColor(val c: Int) {
+        WHITE(-65794),
+        GREY(-9868951);
+
+        companion object {
+            fun getColor(brightness: Int): Int {
+                return getColor(brightness, brightness, brightness, 255)
+            }
+
+            fun getColor(brightness: Int, alpha: Int): Int {
+                return getColor(brightness, brightness, brightness, alpha)
+            }
+
+            fun getColor(red: Int, green: Int, blue: Int): Int {
+                return getColor(red, green, blue, 255)
+            }
+
+            fun getColor(red: Int, green: Int, blue: Int, alpha: Int): Int {
+                var color = 0
+                color = color or (alpha shl 24)
+                color = color or (red shl 16)
+                color = color or (green shl 8)
+                color = color or blue
+                return color
+            }
+        }
+    }
+
+    fun interpolateHealthColor(
+        entity: EntityLivingBase,
+        r: Int,
+        g: Int,
+        b: Int,
+        a: Int,
+        healthFromScoreboard: Boolean,
+        absorption: Boolean
+    ): Color {
+        val entityHealth = getHealth(entity, healthFromScoreboard, absorption)
+        val healthRatio = (entityHealth / entity.maxHealth).coerceIn(0F, 1F)
+        val red = (r * (1 - healthRatio)).toInt()
+        val green = (g * healthRatio).toInt()
+        return Color(red, green, b, a)
     }
 }

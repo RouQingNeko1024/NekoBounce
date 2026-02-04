@@ -1,5 +1,5 @@
 /*
- * LiquidBounce Hacked Client
+ * FireBounce Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
@@ -12,20 +12,24 @@ import net.minecraft.block.BlockGlass
 import net.minecraft.block.BlockSoulSand
 import net.minecraft.block.BlockStainedGlass
 import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
+import net.minecraft.init.Blocks.air
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
+import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
 
 typealias Collidable = (Block?) -> Boolean
 
 object BlockUtils : MinecraftInstance {
+
     /**
      * Get block name by [id]
      */
-    fun getBlock(blockPos: BlockPos) = mc.theWorld?.getBlockState(blockPos)?.block
+    fun getBlock(blockPos: BlockPos) = getState(blockPos)?.block
     fun getBlockName(id: Int): String = Block.getBlockById(id).localizedName
-
+    fun getState(blockPos: BlockPos) = mc.theWorld?.getBlockState(blockPos)
     /**
      * Check if block bounding box is full or partial (non-full)
      */
@@ -154,6 +158,14 @@ object BlockUtils : MinecraftInstance {
         return false
     }
 
+    fun getBlockById(blockId: Int): Block? {
+        return try {
+            Block.getBlockById(blockId).takeIf { it != air }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
     /**
      * Bedwars Blocks List
      */
@@ -184,5 +196,35 @@ object BlockUtils : MinecraftInstance {
             Blocks.wool -> ResourceLocation("minecraft:textures/blocks/wool_colored_white.png")
             else -> ResourceLocation("minecraft:textures/blocks/stone.png")
         }
+    }
+    /**
+     * 检查玩家下方指定距离内是否有可踩的方块
+     * @param player 玩家
+     * @param distance 检查距离（格数）
+     * @return 是否有可踩的方块
+     */
+    fun checkGroundBelow(player: EntityPlayer, distance: Double): Boolean {
+        val world = mc.theWorld ?: return false
+
+        val startX = player.posX
+        val startY = player.posY - 0.1
+        val startZ = player.posZ
+
+        for (i in 1..distance.toInt()) {
+            val checkY = startY - i
+
+            val pos = BlockPos(startX, checkY, startZ)
+
+            val blockState = world.getBlockState(pos)
+            val block = blockState.block
+
+            if (block != null && block !== air && !block.isReplaceable(world, pos) &&
+                block.isBlockSolid(world, pos, EnumFacing.UP) &&
+                block.getCollisionBoundingBox(world, pos, blockState) != null) {
+                return true
+            }
+        }
+
+        return false
     }
 }

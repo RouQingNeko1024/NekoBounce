@@ -40,8 +40,13 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
 
         // Register modules
         val modules = arrayOf(
+                IRC,
+                CrashProtector,
+                WorldBrightness,
+                JumpCircle3,
+                JumpCircle2,
+                CombatVisuals,
                 ClientFixes,
-                AntiSoundCrash,
                 CSGOHUD,
                 HaloPlus,
                 ItemRotate,
@@ -236,7 +241,6 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
             KeyPearl,
             Kick,
             KillAura,
-            LiquidChat,
             LiquidWalk,
             Liquids,
             LongJump,

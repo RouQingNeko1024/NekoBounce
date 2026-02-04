@@ -25,6 +25,7 @@ object CommandManager {
     fun registerCommands() {
         commands.clear()
 
+        registerCommand(IRCCommand())
         registerCommand(AutoDisableCommand)
         registerCommand(BindCommand)
         registerCommand(VClipCommand)
@@ -55,10 +56,6 @@ object CommandManager {
         registerCommand(PrefixCommand)
         registerCommand(ShortcutCommand)
         registerCommand(XrayCommand)
-        registerCommand(LiquidChatCommand)
-        registerCommand(PrivateChatCommand)
-        registerCommand(ChatTokenCommand)
-        registerCommand(ChatAdminCommand)
         registerCommand(TeleportCommand)
     }
 

@@ -55,24 +55,35 @@ public abstract class MixinGuiInGame extends Gui {
     @Final
     protected Minecraft mc;
 
-    // CSGOHUD specific injections - 简化的方法，只取消主要的HUD渲染
+    // 在1.8.9中，十字准星的渲染方法名可能是不同的
     @Inject(
-        method = "renderGameOverlay",
+        method = "renderSelectedItem",
         at = @At("HEAD"),
         cancellable = true
     )
-    private void onRenderGameOverlay(float partialTicks, CallbackInfo callbackInfo) {
+    private void csgoHUD$onRenderSelectedItem(ScaledResolution sr, CallbackInfo callbackInfo) {
         if (CSGOHUD.isCSGOHUDEnabled() && CSGOHUD.shouldHideVanillaHUD()) {
-            // 跳过渲染原版HUD，但保留聊天等必要元素
-            // 我们只渲染自定义的CSGOHUD，原版HUD完全跳过
             callbackInfo.cancel();
-            
-            // 调用Render2DEvent，让CSGOHUD渲染
-            liquidBounce$injectRender2DEvent(partialTicks);
         }
     }
 
-    // 现有的其他方法保持不变...
+    // 添加一个更通用的注入点来隐藏十字准星
+    @Inject(
+        method = "renderGameOverlay",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/GuiIngame;drawTexturedModalRect(IIIIII)V",
+            ordinal = 0
+        ),
+        cancellable = true
+    )
+    private void csgoHUD$onRenderCrosshair(float partialTicks, CallbackInfo callbackInfo) {
+        if (CSGOHUD.isCSGOHUDEnabled() && CSGOHUD.shouldHideCrosshair()) {
+            callbackInfo.cancel();
+        }
+    }
+
+    // 原有的方法保持不变...
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(CallbackInfo callbackInfo) {
         if (HUD.INSTANCE.handleEvents())
@@ -206,9 +217,7 @@ public abstract class MixinGuiInGame extends Gui {
             }
         }
 
-        if (!CSGOHUD.isCSGOHUDEnabled() || !CSGOHUD.shouldHideVanillaHUD()) {
-            liquidBounce$injectRender2DEvent(delta);
-        }
+        liquidBounce$injectRender2DEvent(delta);
     }
 
     @Inject(

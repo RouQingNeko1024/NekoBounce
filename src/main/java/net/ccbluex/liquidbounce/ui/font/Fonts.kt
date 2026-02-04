@@ -61,6 +61,8 @@ object Fonts : MinecraftInstance {
         mc.fontRendererObj
     }
 
+    lateinit var fontSmall: GameFontRenderer
+
     lateinit var fontExtraBold35: GameFontRenderer
     lateinit var fontExtraBold40: GameFontRenderer
     lateinit var fontSemibold35: GameFontRenderer
@@ -146,6 +148,9 @@ object Fonts : MinecraftInstance {
             LOGGER.info("Start to load fonts from file.")
 
             register(minecraftFontInfo, minecraftFont)
+
+            fontSmall = register(FontInfo(name = "Roboto Medium", size = 30),
+                getFontFromFile("Roboto-Medium.ttf", 30).asGameFontRenderer())
 
             fontRegular30 = register(
                 FontInfo(name = "Outfit Regular", size = 30),

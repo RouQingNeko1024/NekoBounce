@@ -1,13 +1,16 @@
 /*
- * LiquidBounce Hacked Client
+ * FireBounce Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
+@file:Suppress("UNCHECKED_CAST")
+
 package net.ccbluex.liquidbounce.utils.client
 
 import kotlinx.coroutines.Dispatchers
 import net.ccbluex.liquidbounce.event.*
 import net.ccbluex.liquidbounce.features.module.modules.combat.FakeLag
+import net.ccbluex.liquidbounce.features.module.modules.combat.LagRange
 import net.ccbluex.liquidbounce.features.module.modules.combat.Velocity
 import net.ccbluex.liquidbounce.injection.implementations.IMixinEntity
 import net.ccbluex.liquidbounce.utils.extensions.currPos
@@ -18,6 +21,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.Packet
 import net.minecraft.network.play.INetHandlerPlayClient
+import net.minecraft.network.play.INetHandlerPlayServer
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.server.*
 import net.minecraft.util.BlockPos
@@ -25,7 +29,9 @@ import net.minecraft.util.Vec3
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 import kotlin.concurrent.write
+import kotlin.math.hypot
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 object PacketUtils : MinecraftInstance, Listenable {
 
@@ -35,6 +41,10 @@ object PacketUtils : MinecraftInstance, Listenable {
     fun schedulePacketProcess(elements: Collection<Packet<*>>): Boolean = queueLock.withLock {
         queuedPackets.addAll(elements)
     }
+    fun sendPacketNoEvent(packet: Packet<INetHandlerPlayServer>?) {
+        packet ?: return
+        sendPackets(packet, triggerEvents = false)
+    }
 
     fun schedulePacketProcess(element: Packet<*>): Boolean = queueLock.withLock {
         queuedPackets.add(element)
@@ -43,6 +53,7 @@ object PacketUtils : MinecraftInstance, Listenable {
     fun isQueueEmpty(): Boolean = queueLock.withLock {
         queuedPackets.isEmpty()
     }
+
 
     val onTick = handler<GameTickEvent>(priority = 2) {
         for (entity in mc.theWorld.loadedEntityList) {
@@ -98,8 +109,9 @@ object PacketUtils : MinecraftInstance, Listenable {
             queuedPackets.removeEach { packet ->
                 handlePacket(packet)
                 val packetEvent = PacketEvent(packet, EventState.RECEIVE)
-                EventManager.call(packetEvent, FakeLag)
+                EventManager.call(packetEvent, LagRange)
                 EventManager.call(packetEvent, Velocity)
+                EventManager.call(packetEvent, FakeLag)
 
                 true
             }
@@ -143,7 +155,7 @@ object PacketUtils : MinecraftInstance, Listenable {
         packets.forEach { handlePacket(it) }
 
     @JvmStatic
-    private fun handlePacket(packet: Packet<*>?) {
+    fun handlePacket(packet: Packet<*>?) {
         runCatching { (packet as Packet<INetHandlerPlayClient>).processPacket(mc.netHandler) }.onSuccess {
             PPSCounter.registerType(PPSCounter.PacketType.RECEIVED)
         }
@@ -185,6 +197,11 @@ var S12PacketEntityVelocity.realMotionZ
     set(value) {
         motionX = (value * 8000.0).roundToInt()
     }
+val S12PacketEntityVelocity.bps
+    get() = sqrt(realMotionX * realMotionX + realMotionZ * realMotionZ) * 20.0
+val S12PacketEntityVelocity.bpt
+    get() = hypot(realMotionX, realMotionZ)
+
 
 val S14PacketEntity.realMotionX
     get() = func_149062_c() / 32.0

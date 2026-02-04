@@ -53,10 +53,111 @@ object CSGOHUD : Module("CSGOHUD", Category.RENDER) {
     private val separatorColorGreen by int("SeparatorGreen", 255, 0..255)
     private val separatorColorBlue by int("SeparatorBlue", 255, 0..255)
 
+    private val showCrosshair by boolean("ShowCrosshair", true)
+    private val crosshairColorRed by int("CrosshairRed", 255, 0..255)
+    private val crosshairColorGreen by int("CrosshairGreen", 255, 0..255)
+    private val crosshairColorBlue by int("CrosshairBlue", 255, 0..255)
+    private val crosshairSize by float("CrosshairSize", 5f, 1f..20f)
+    private val crosshairWidth by float("CrosshairWidth", 1f, 0.5f..5f)
+
+    private val showCoordinates by boolean("ShowCoordinates", true)
+    private val coordinatesColorRed by int("CoordinatesRed", 255, 0..255)
+    private val coordinatesColorGreen by int("CoordinatesGreen", 255, 0..255)
+    private val coordinatesColorBlue by int("CoordinatesBlue", 255, 0..255)
+    private val coordinatesPosX by int("CoordinatesX", 5, 0..1000)
+    private val coordinatesPosY by int("CoordinatesY", 5, 0..1000)
+
+    private val overrideVanillaHud by boolean("OverrideVanillaHUD", true)
+    private val hideVanillaHotbar by boolean("HideVanillaHotbar", true)
+    private val hideVanillaHealth by boolean("HideVanillaHealth", true)
+    private val hideVanillaArmor by boolean("HideVanillaArmor", true)
+    private val hideVanillaHunger by boolean("HideVanillaHunger", true)
+    private val hideVanillaExp by boolean("HideVanillaExp", true)
+
     val onRender2D = handler<Render2DEvent> { event ->
         val sr = ScaledResolution(mc)
         val width = sr.scaledWidth
         val height = sr.scaledHeight
+        
+        // Draw custom crosshair
+        if (showCrosshair) {
+            val crosshairColor = Color(crosshairColorRed, crosshairColorGreen, crosshairColorBlue)
+            val centerX = width / 2f
+            val centerY = height / 2f
+            
+            RenderUtils.drawRect(
+                centerX - crosshairWidth / 2f,
+                centerY - crosshairSize,
+                centerX + crosshairWidth / 2f,
+                centerY + crosshairSize,
+                crosshairColor.rgb
+            )
+            
+            RenderUtils.drawRect(
+                centerX - crosshairSize,
+                centerY - crosshairWidth / 2f,
+                centerX + crosshairSize,
+                centerY + crosshairWidth / 2f,
+                crosshairColor.rgb
+            )
+        }
+        
+        // Draw coordinates
+        if (showCoordinates && mc.thePlayer != null && mc.theWorld != null) {
+            val coordinatesColor = Color(coordinatesColorRed, coordinatesColorGreen, coordinatesColorBlue)
+            val x = mc.thePlayer.posX.toInt()
+            val y = mc.thePlayer.posY.toInt()
+            val z = mc.thePlayer.posZ.toInt()
+            val facing = mc.thePlayer.horizontalFacing.getName().substring(0, 1).uppercase()
+            
+            val coordText = "XYZ: $x $y $z $facing"
+            mc.fontRendererObj.drawString(
+                coordText,
+                coordinatesPosX.toFloat(),
+                coordinatesPosY.toFloat(),
+                coordinatesColor.rgb,
+                false
+            )
+        }
+        
+        // Draw black background to cover vanilla HUD elements if enabled
+        if (overrideVanillaHud && state) {
+            val sr = ScaledResolution(mc)
+            val centerX = sr.scaledWidth / 2
+            
+            // Cover vanilla hotbar area
+            if (hideVanillaHotbar) {
+                RenderUtils.drawRect(
+                    centerX - 91f,
+                    sr.scaledHeight - 22f,
+                    centerX + 91f,
+                    sr.scaledHeight.toFloat(),
+                    Color(0, 0, 0, 200).rgb
+                )
+            }
+            
+            // Cover vanilla health/armor/hunger area
+            if (hideVanillaHealth || hideVanillaArmor || hideVanillaHunger) {
+                RenderUtils.drawRect(
+                    centerX - 91f,
+                    sr.scaledHeight - 39f,
+                    centerX + 91f,
+                    sr.scaledHeight - 22f,
+                    Color(0, 0, 0, 200).rgb
+                )
+            }
+            
+            // Cover vanilla experience bar area
+            if (hideVanillaExp) {
+                RenderUtils.drawRect(
+                    centerX - 91f,
+                    sr.scaledHeight - 32f - 4f,
+                    centerX + 91f,
+                    sr.scaledHeight - 32f + 4f,
+                    Color(0, 0, 0, 200).rgb
+                )
+            }
+        }
         
         GlStateManager.pushMatrix()
         GlStateManager.scale(hudScale, hudScale, 1.0f)
@@ -225,7 +326,7 @@ object CSGOHUD : Module("CSGOHUD", Category.RENDER) {
 
     override fun onEnable() {
         hideVanillaHUD = true
-        hideCrosshair = true
+        hideCrosshair = !showCrosshair  // 如果显示自定义准星，就隐藏原版准星
     }
 
     override fun onDisable() {

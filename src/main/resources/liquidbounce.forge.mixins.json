@@ -4,6 +4,7 @@
   "refmap": "liquidbounce.mixins.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "nekobounce.EnchantColorMixin",
     "block.MixinBlock",
     "block.MixinBlockAnvil",
     "block.MixinBlockLadder",

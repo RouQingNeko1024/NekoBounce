@@ -54,7 +54,7 @@ object Fly : Module("Fly", Category.MOVEMENT, Keyboard.KEY_F) {
         NCP, OldNCP,
 
         // AAC
-        AAC1910, AAC305, AAC316, AAC3312, AAC3312Glide, AAC3313,
+        AAC1910, AAC305, AAC316, AAC3312, AAC3312Glide, AAC3313, AAC5,
 
         // CubeCraft
         CubeCraft,
