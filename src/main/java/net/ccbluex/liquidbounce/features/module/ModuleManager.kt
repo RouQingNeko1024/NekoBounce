@@ -25,6 +25,7 @@ import net.ccbluex.liquidbounce.features.module.modules.neko.*
 import net.ccbluex.liquidbounce.features.module.modules.world.Timer
 import net.ccbluex.liquidbounce.features.module.modules.world.scaffolds.Scaffold
 import net.ccbluex.liquidbounce.features.module.modules.world.scaffolds.Scaffold2
+import net.ccbluex.liquidbounce.features.module.modules.world.scaffolds.Scaffold3
 import net.ccbluex.liquidbounce.utils.client.ClientUtils.LOGGER
 import java.util.*
 
@@ -40,6 +41,15 @@ object ModuleManager : Listenable, Collection<Module> by MODULE_REGISTRY {
 
         // Register modules
         val modules = arrayOf(
+                
+                FirePhase,
+                Scaffold3,
+                FDPESP,
+                FullGrimDisabler,
+                ScreenRectangle,
+                KillauraPlus,
+                MMDModel,
+                NoSlow2,
                 IRC,
                 CrashProtector,
                 WorldBrightness,

@@ -18,41 +18,59 @@ import net.minecraft.client.renderer.WorldRenderer
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.Vec3
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
 object CsgoAimbot : Module("CsgoAimbot", Category.COMBAT) {
     
-    private val targets = mutableListOf<EntityPlayer>()
+    private val markedPlayers = mutableSetOf<EntityPlayer>()
     private var currentTarget: EntityPlayer? = null
     
     val onUpdate = handler<UpdateEvent> {
         val thePlayer = mc.thePlayer ?: return@handler
         val theWorld = mc.theWorld ?: return@handler
         
-        // 清除旧目标
-        targets.clear()
         currentTarget = null
         
+        // 检查鼠标中键是否被按下
+        if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
+            val objectMouseOver = mc.objectMouseOver
+            if (objectMouseOver != null && objectMouseOver.entityHit is EntityPlayer) {
+                val player = objectMouseOver.entityHit as EntityPlayer
+                if (player != thePlayer && !player.isDead && player.health > 0) {
+                    if (markedPlayers.contains(player)) {
+                        markedPlayers.remove(player)
+                    } else {
+                        markedPlayers.add(player)
+                    }
+                }
+            }
+        }
+        
+        // 如果没有任何标记玩家，则使用所有可见玩家
+        val playersToCheck = if (markedPlayers.isNotEmpty()) {
+            markedPlayers.filter { !it.isDead && it.health > 0 }
+        } else {
+            emptyList()
+        }
+        
         // 寻找所有符合条件的玩家
-        for (entity in theWorld.playerEntities) {
-            if (entity == thePlayer || entity.isDead || entity.health <= 0) continue
-            
-            // 检查装备颜色是否不同
-            if (!hasDifferentEquipmentColor(thePlayer, entity)) continue
+        val visiblePlayers = mutableListOf<EntityPlayer>()
+        for (entity in playersToCheck) {
+            if (entity == thePlayer) continue
             
             // 检查是否可见（不能穿墙）
             if (!isVisible(thePlayer, entity)) continue
             
-            targets.add(entity)
+            visiblePlayers.add(entity)
         }
         
         // 选择最近的目标
-        if (targets.isNotEmpty()) {
-            currentTarget = targets.minByOrNull { thePlayer.getDistanceToEntityBox(it) }
+        if (visiblePlayers.isNotEmpty()) {
+            currentTarget = visiblePlayers.minByOrNull { thePlayer.getDistanceToEntityBox(it) }
             
             // 瞄准目标
             if (currentTarget != null) {
@@ -73,22 +91,26 @@ object CsgoAimbot : Module("CsgoAimbot", Category.COMBAT) {
         val thePlayer = mc.thePlayer ?: return@handler
         val partialTicks = event.partialTicks
         
-        // 为所有目标绘制红点
-        for (target in targets) {
+        // 为所有标记玩家绘制点
+        for (target in markedPlayers) {
             if (target.isDead || target.health <= 0) continue
             
             val posX = target.lastTickPosX + (target.posX - target.lastTickPosX) * partialTicks
             val posY = target.lastTickPosY + (target.posY - target.lastTickPosY) * partialTicks
             val posZ = target.lastTickPosZ + (target.posZ - target.lastTickPosZ) * partialTicks
             
-            // 绘制一个红色点（在目标头部位置）
-            drawPoint(posX, posY + target.eyeHeight, posZ)
+            // 检查是否可见
+            val isVisible = isVisible(thePlayer, target)
+            
+            // 绘制一个点（在目标头部位置）
+            drawPoint(posX, posY + target.eyeHeight, posZ, isVisible)
         }
     }
     
     override fun onDisable() {
         // 禁用模块时恢复右键
         mc.gameSettings.keyBindUseItem.pressed = false
+        markedPlayers.clear()
     }
     
     /**
@@ -118,7 +140,7 @@ object CsgoAimbot : Module("CsgoAimbot", Category.COMBAT) {
     /**
      * 绘制一个点（使用小的十字）
      */
-    private fun drawPoint(x: Double, y: Double, z: Double) {
+    private fun drawPoint(x: Double, y: Double, z: Double, isVisible: Boolean) {
         val thePlayer = mc.thePlayer ?: return
         val theWorld = mc.theWorld ?: return
         
@@ -135,8 +157,13 @@ object CsgoAimbot : Module("CsgoAimbot", Category.COMBAT) {
         GL11.glRotatef(-mc.renderManager.playerViewY, 0f, 1f, 0f)
         GL11.glRotatef(mc.renderManager.playerViewX, 1f, 0f, 0f)
         
-        // 设置颜色为红色
-        GL11.glColor4f(1f, 0f, 0f, 1f)
+        // 设置颜色：可见时为绿色，不可见时为红色
+        if (isVisible) {
+            GL11.glColor4f(0f, 1f, 0f, 1f) // 绿色
+        } else {
+            GL11.glColor4f(1f, 0f, 0f, 1f) // 红色
+        }
+        
         GL11.glDisable(GL11.GL_TEXTURE_2D)
         GL11.glDisable(GL11.GL_DEPTH_TEST)
         GL11.glDepthMask(false)
@@ -164,30 +191,6 @@ object CsgoAimbot : Module("CsgoAimbot", Category.COMBAT) {
         GL11.glEnable(GL11.GL_DEPTH_TEST)
         GL11.glEnable(GL11.GL_TEXTURE_2D)
         GL11.glPopMatrix()
-    }
-    
-    /**
-     * 检查两个玩家的装备颜色是否不同
-     */
-    private fun hasDifferentEquipmentColor(player1: EntityPlayer, player2: EntityPlayer): Boolean {
-        // 比较头盔、胸甲、护腿、靴子的颜色
-        for (i in 0..3) {
-            val item1 = player1.inventory.armorInventory[i]
-            val item2 = player2.inventory.armorInventory[i]
-            
-            // 如果都有装备且物品ID相同，但损伤值不同，则认为颜色不同
-            if (item1 != null && item2 != null) {
-                if (item1.item === item2.item && item1.itemDamage != item2.itemDamage) {
-                    return true
-                }
-            }
-            
-            // 如果一个有装备一个没有装备，也认为颜色不同
-            if ((item1 != null && item2 == null) || (item1 == null && item2 != null)) {
-                return true
-            }
-        }
-        return false
     }
     
     /**

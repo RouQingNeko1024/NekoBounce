@@ -63,7 +63,7 @@ class ScoreboardElement(
     private val titleRectExtraHeight by int("TitleRectExtraHeight", 5, 0..20) { drawRectOnTitle }
     private val rectHeightPadding by int("TitleRectHeightPadding", 0, 0..10) { drawRectOnTitle }
 
-    private val serverIp by choices("ServerIP", arrayOf("Normal", "None", "Client", "Website","qwq" ,"风格岛" ,"Cat","Styles","Flux","花雨庭","柔情","xinxin","Fdp"), "Client")
+    private val serverIp by choices("ServerIP", arrayOf("Normal", "None", "Client", "Website","qwq" ,"风格岛" ,"Cat","Styles","Flux","花雨庭","柔情","xinxin","FDP","Senrenbanka"), "Client")
     private val number by boolean("Number", false)
     private val textShadow by boolean("TextShadow", false)
     private val font by font("Font", Fonts.fontSemibold35)
@@ -326,7 +326,8 @@ Regex("\\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\
                                             "花雨庭" -> "§c❀§b 花雨庭 §c❀§r"
                                             "柔情" -> "§c❀§b 柔情猫娘 §c❀§r"
                                             "xinxin" -> "§b免费heshuyou.xyz§r"
-                                            "Fdp" -> "§7[§b§lFDPClient§r§7]"
+                                            "fdp" -> "§7[§b§lFDPClient§r§7]"
+                                            "senrenbanka" -> "§d§lSenrenbanka.wtf"
                                             else -> name
                                         }
                                     }

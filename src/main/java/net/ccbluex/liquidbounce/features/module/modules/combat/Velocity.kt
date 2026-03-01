@@ -59,13 +59,13 @@ object Velocity : Module("Velocity", Category.COMBAT) {
      */
     private val mode by choices(
         "Mode", arrayOf(
-            "Simple", "AAC", "AACPush", "AACZero", "AACv4",
+            "Simple", "AAC", "AACPush", "AACZero", "AACv4","AAC5",
             "Reverse", "SmoothReverse", "Jump", "Glitch", "Legit",
             "GhostBlock", "Vulcan", "S32Packet", "MatrixReduce","MatrixReducePlus",
             "IntaveReduce", "Delay", "GrimC03", "Hypixel", "HypixelAir",
             "Click", "BlocksMC", "GrimCombat", "Polar","PredictionA",
             "MatrixNoXZ", "Intave13KeepLow", "Intave13Reverse","Intave13GommeZero","AAC3.3.12", "AAC3.3.14","Intave13Wall", "Intave13Old", "Matrix6.6.1", "Vulcan2.0.1",
-            "Intave14", "Intave/Polar-Flag", "SmartJumpReset"  // 添加这3个新模式
+            "Intave14","Intave14.3.3", "Intave/Polar-Flag", "SmartJumpReset"  // 添加这3个新模式
         ), "Simple"
     )
 
@@ -290,6 +290,12 @@ object Velocity : Module("Velocity", Category.COMBAT) {
                 }
             }
 
+            "aac5" -> {
+                if (mc.thePlayer.hurtTime > 1) {
+                    reduceXZ(0.81)
+                }
+            }
+
             "matrix6.6.1" -> {
                 if (thePlayer.hurtTime > 2) {
                     speed = 0.14f
@@ -302,6 +308,14 @@ object Velocity : Module("Velocity", Category.COMBAT) {
                     mc.gameSettings.keyBindBack.pressed = false
                     mc.gameSettings.keyBindLeft.pressed = false
                     mc.gameSettings.keyBindRight.pressed = false
+                }
+            }
+
+            "intave14.3.3" -> {
+                if (mc.thePlayer.hurtTime == 10) {
+                    reduceXZ(-1.0)
+                } else if (mc.thePlayer.hurtTime == 9 && mc.thePlayer.onGround) {
+                    reduceXZ(0.9)
                 }
             }
 
@@ -646,6 +660,14 @@ object Velocity : Module("Velocity", Category.COMBAT) {
                 return@handler
 
             var target = mc.objectMouseOver?.entityHit
+
+        if (mode == "Intave14.3.3") {
+            if (mc.thePlayer.hurtTime == 10) {
+                reduceXZ(-1.0)
+            } else if (mc.thePlayer.hurtTime == 9 && mc.thePlayer.onGround) {
+                reduceXZ(0.9)
+            }
+        }
 
             if (target == null) {
                 if (whenFacingEnemyOnly) {
@@ -1247,6 +1269,12 @@ object Velocity : Module("Velocity", Category.COMBAT) {
                 }
             }
         }
+    }
+
+    private fun reduceXZ(factor: Double) {
+        val player = mc.thePlayer ?: return
+        player.motionX *= factor
+        player.motionZ *= factor
     }
 
     private fun getNearestEntityInRange(range: Float = this.range): Entity? {

@@ -15,10 +15,7 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.a
 import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.aac.AACv2
 import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.aac.AACv3
 import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.ncp.NCP
-import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.other.Buzz
-import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.other.Hycraft
-import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.other.Redesky
-import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.other.VerusDamage
+import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.other.*
 import net.ccbluex.liquidbounce.features.module.modules.movement.longjumpmodes.other.VerusDamage.damaged
 import net.ccbluex.liquidbounce.utils.extensions.isMoving
 import net.ccbluex.liquidbounce.utils.extensions.tryJump
@@ -33,7 +30,7 @@ object LongJump : Module("LongJump", Category.MOVEMENT) {
         AACv1, AACv2, AACv3,
 
         // Other
-        Redesky, Hycraft, Buzz, VerusDamage
+        KKCraft,Redesky, Hycraft, Buzz, VerusDamage
     )
 
     private val modes = longJumpModes.map { it.modeName }.toTypedArray()

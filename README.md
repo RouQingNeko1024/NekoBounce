@@ -49,6 +49,7 @@ A free mixin-based injection hacked-client for Minecraft using Minecraft Forge, 
   - Epilogue
   - Augustus B2.6
   - FireBounce
+  - CatBounce
 
 ## Issues
 If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/CCBlueX/NekoBounce/issues).

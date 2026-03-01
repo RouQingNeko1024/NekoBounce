@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "nekobounce.EnchantColorMixin",
+    "nekobounce.MixinRenderPlayer",
     "block.MixinBlock",
     "block.MixinBlockAnvil",
     "block.MixinBlockLadder",
